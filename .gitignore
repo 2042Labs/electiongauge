@@ -1,5 +1,7 @@
 *.pyc
 
+data/*
+
 data/twitter.ns
 
 data/twitter.0
@@ -23,3 +25,5 @@ data/mongod.lock
 data/mongod.lock
 
 data/mongod.lock
+
+.DS_Store
