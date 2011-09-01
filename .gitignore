@@ -27,3 +27,5 @@ data/mongod.lock
 data/mongod.lock
 
 .DS_Store
+
+data/mongod.lock
