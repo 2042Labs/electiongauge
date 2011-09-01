@@ -112,18 +112,20 @@ class MongoStreamer(StreamWatcherListener):
         self.connection = mongo.Connection()
         self.db = self.connection.twitter
         self.tweets = self.db.tweets
+        self.tweets.create_index([("date", mongo.DESCENDING), ("author", mongo.ASCENDING)])
         
     def tweepy2json(self,status):
         out={}
         user=status.author
         out['author']=user.screen_name
-        out['loc']=user.location
         out['followers']=user.followers_count
         out['profile']=user.description
         out['text']=status.text
-        out['created_at']=str(status.created_at)
+        out['date']=str(status.created_at)
+        out['loc']=user.location
         out['geo']=str(status.geo)
         out['place']=str(status.place)
+        
         return(out)
 
 
