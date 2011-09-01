@@ -1,0 +1,17 @@
+*.pyc
+
+data/twitter.ns
+
+data/twitter.0
+
+data/twitter.1
+
+data/test_database.ns
+
+data/test_database.1
+
+data/test_database.0
+
+data/mongod.lock
+
+data/mongod.lock
