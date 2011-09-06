@@ -1,0 +1,21 @@
+How to connect to the EC2 machine:
+
+Change permissions on the RSA key:
+% chmod 400 electiongauge.pem
+
+
+SSH into the machine:
+% ssh -i electiongauge.pem ec2-user@ec2-107-20-65-22.compute-1.amazonaws.com
+
+or...
+
+% ssh -i electiongauge.pem ec2-user@dev.electiongauge.com  
+
+or 
+
+% ssh -i electiongauge.pem ec2-user@test.electiongauge.com
+
+
+Currently, dev and test machines are mapped to the same EC2 instance, and the www is mapped to a placeholder page. Once we have something to show (and something for Google to index), we'll move the DNS pointers and start up more instances.
+
+
