@@ -1,4 +1,5 @@
+-r requirements.pip
 
 ipython
-nose 
-
+nose
+django-debug-toolbar

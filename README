@@ -1,20 +1,29 @@
 
 ########################################
+## Setting up the system dependencies ##
+########################################
+
+# Install pip, virtualenv, virtualenv wrapper
+easy_install pip
+pip install virtualenv
+pip install virtualenvwrapper
+# Then follow setup instructions located here: http://www.doughellmann.com/docs/virtualenvwrapper/
+
+# Install postgres
+brew install postgres
+# Previous command requires homebrew instead of macports or fink.
+# More info: http://mxcl.github.com/homebrew/
+
+########################################
 ## Setting up the project environment ##
 ########################################
 
-# Install pip, virtualenv, virtualenv wrapper 
-easy_install pip 
-pip install virtualenv
-pip install virtualenvwrapper
-
-# Then follow setup instructions located here: http://www.doughellmann.com/docs/virtualenvwrapper/
-
 # Setup a clean new virtualenv called electiongauge
-mkvirtualenv electiongauge --no-site-package
+mkvirtualenv electiongauge --no-site-packages
 
 # Active virtualenv (This requires virtualenv wrapper to be set up)
 workon electiongague
 
 # For development install requirements_dev.pip
 pip install -r requirements_dev.pip
+# This will install requirements.pip also
