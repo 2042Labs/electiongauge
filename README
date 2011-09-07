@@ -1,4 +1,3 @@
-
 ########################################
 ## Setting up the system dependencies ##
 ########################################
@@ -27,3 +26,7 @@ workon electiongague
 # For development install requirements_dev.pip
 pip install -r requirements_dev.pip
 # This will install requirements.pip also
+
+##########
+## https://convore.com/electiongauge
+##########
