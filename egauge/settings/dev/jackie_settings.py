@@ -1,6 +1,5 @@
 from egauge.settings.common_settings import *
 
-
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 
@@ -13,17 +12,24 @@ MANAGERS = ADMINS
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'egauge',                      # Or path to database file if using sqlite3.
-        'USER': 'egauge',                      # Not used with sqlite3.
-        'PASSWORD': 'egauge',                  # Not used with sqlite3.
-        'HOST': 'localhost',                      # Set to empty string for localhost. Not used with sqlite3.
-        'PORT': '5432',                      # Set to empty string for default. Not used with sqlite3.
+        'NAME': 'egauge',
+        'USER': 'egauge',
+        'PASSWORD': 'egauge',
+        'HOST': 'localhost',
+        'PORT': '5432',
     }
 }
 
+ENV_DIR = '/home/jakopanda/.virtualenvs/electiongauge/'
+CODE_DIR = '/home/jakopanda/Projects/code/electiongauge/egauge'
+
+TEMPLATE_DIRS = (
+    CODE_DIR,
+    ENV_DIR + 'lib/python2.6/site-packages/django/contrib/admin/templates',
+    ENV_DIR + 'lib/python2.6/site-packages/debug_toolbar/templates',
+)
+
 INSTALLED_APPS = (
-    'django.contrib.admin',
-    'django.contrib.auth',
     'debug_toolbar',
 ) + INSTALLED_APPS
 
@@ -49,3 +55,6 @@ LOGGING = {
         },
     }
 }
+
+
+INTERNAL_IPS = ('127.0.0.1',)
