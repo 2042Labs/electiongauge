@@ -3,8 +3,9 @@ from egauge.settings.common_settings import *
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 
+#edited to be only me, so that Jackie doesn't get a lot of spam if I throw 500 errors
 ADMINS = (
-    ('Jackie Kazil', 'jacqueline.kazil@gmail.com'),
+    ('SWise', 'swise0@gmail.com'),
 )
 
 MANAGERS = ADMINS
@@ -20,8 +21,8 @@ DATABASES = {
     }
 }
 
-ENV_DIR = '/home/jakopanda/.virtualenvs/electiongauge/'
-CODE_DIR = '/home/jakopanda/Projects/code/electiongauge/egauge'
+ENV_DIR = '/Users/swise/.virtualenvs/electiongauge/'
+CODE_DIR = '/Users/swise/Projects/electiongauge/electiongauge/'
 
 TEMPLATE_DIRS = (
     CODE_DIR,
