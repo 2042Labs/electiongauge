@@ -16,12 +16,12 @@ class Candidate(models.Model):
     first_name = models.CharField(max_length=30)
     last_name = models.CharField(max_length=40)
     party = models.CharField(max_length=30) # 'republican', 'green', 'know-nothing'
-    photo = models.ImageField()
     website = models.URLField() # more info!
-    election = models.ForeignKey(Election)
-	# the election in which Candidate is running (ONLY ONE ELECTION PER CANDIDATE)
+    election = models.ForeignKey(Election) # the election in which Candidate is running (ONLY ONE ELECTION PER CANDIDATE)
 
-
+    photo = models.URLField()
+    photo_height = models.IntegerField()
+    photo_weight = models.IntegerField()
 
 # a processed tweet taken from Twitter and parsed for information about the
 # candidates and elections it references as well as its origin point. The text
@@ -30,5 +30,5 @@ class Tweet(models.Model):
     text = models.CharField(max_length=200) # however long tweets are?
     candidates = models.ManyToManyField(Candidate) # who does it reference
     elections = models.ManyToManyField(Election) # which election does it reference
-    latitude = models.DecimalField()
-    longitude = models.DecimalField()
+    latitude = models.DecimalField(max_digits=10, decimal_places=8)
+    longitude = models.DecimalField(max_digits=10, decimal_places=8)
