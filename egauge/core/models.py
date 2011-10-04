@@ -29,11 +29,11 @@ class Tag(models.Model):
 
 
 class Location(models.Model):
-
-    city    = models.ForeignKey(City, null=True, blank=True)
-    county  = models.ForeignKey(County, null=True, blank=True)
-    state   = models.ForeignKey(State, null=True, blank=True)
-    country = models.ForeignKey(Country)
+    pass
+    #city    = models.ForeignKey(City, null=True, blank=True)
+    #county  = models.ForeignKey(County, null=True, blank=True)
+    #state   = models.ForeignKey(State, null=True, blank=True)
+    #country = models.ForeignKey(Country)
 
 
 class OfficeType(models.Model):
@@ -49,6 +49,13 @@ class Office(models.Model):
     office_type = models.ForeignKey(OfficeType)
     location    = models.ForeignKey(Location)
 
+
+class Party(models.Model):
+    
+    abbrev   = models.CharField(max_length=2, unique=True)
+    name     = models.CharField(max_length=50)
+
+
 # QUESTION: Can we get this info from somewhere & auto magically populate, so we don't have to maintain.
 class Election(models.Model):
     '''an election at the state or national level; associated with Candidates'''
@@ -56,7 +63,7 @@ class Election(models.Model):
     display_name = models.CharField(max_length=250, help_text='name of the election for general reference on front-end')
     election_type = models.CharField(max_length=1, choices=choices.ELECTION_TYPES)
     upcoming_election = models.ForeignKey('self', null=True, blank=True, related_name='primaries_set')
-    location = models.ForeignKey(Location, help='the jurisdiction of the election')
+    location = models.ForeignKey(Location, help_text='the jurisdiction of the election')
     office = models.ForeignKey(Office, help_text='Senate, Governor, President')
     party = models.ForeignKey(Party, null=True, blank=True, help_text="only for primaries")
     polling_date = models.DateField()
