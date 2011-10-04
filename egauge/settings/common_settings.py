@@ -97,7 +97,7 @@ INSTALLED_APPS = (
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
-    
-    'egauge.core',
-)
 
+    'egauge.core',
+    'egauge.geo_data',
+)
