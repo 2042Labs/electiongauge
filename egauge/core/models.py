@@ -18,16 +18,6 @@ class ExternalURLS(models.Model):
     class Meta:
         abstract = True
 
-
-
-
-# a tag associated with at least one of the tweets collected
-class Tag(models.Model):
-    name = models.CharField(max_length=30)
-    description = models.CharField(max_length=200)
-
-
-
 class Location(models.Model):
     pass
     #city    = models.ForeignKey(City, null=True, blank=True)
@@ -35,6 +25,11 @@ class Location(models.Model):
     #state   = models.ForeignKey(State, null=True, blank=True)
     #country = models.ForeignKey(Country)
 
+# a tag associated with at least one of the tweets collected
+class Tag(models.Model):
+    name = models.CharField(max_length=30)
+    description = models.CharField(max_length=200)
+    locations = models.ManyToManyField(Location, blank=True, null=True)
 
 class OfficeType(models.Model):
     '''Office types are Senator/Rep/Governor, etc'''
@@ -51,7 +46,7 @@ class Office(models.Model):
 
 
 class Party(models.Model):
-    
+
     abbrev   = models.CharField(max_length=2, unique=True)
     name     = models.CharField(max_length=50)
 
@@ -86,7 +81,7 @@ class Candidate(models.Model):
 # of the original message is retained
 class Tweet(models.Model):
     text = models.CharField(max_length=200) # however long tweets are?
-    candidates = models.ManyToManyField(Candidate) # who does it reference
-    elections = models.ManyToManyField(Election) # which election does it reference
-    latitude = models.DecimalField(max_digits=10, decimal_places=8)
-    longitude = models.DecimalField(max_digits=10, decimal_places=8)
+    candidates = models.ManyToManyField(Candidate, blank=True, null=True) # who does it reference
+    elections = models.ManyToManyField(Election, blank=True, null=True) # which election does it reference
+    tags = models.ManyToManyField(Tag, blank=True, null=True)
+    location = models.ForeignKey(Location)
