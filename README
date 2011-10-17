@@ -13,6 +13,38 @@ brew install postgres
 # Previous command requires homebrew instead of macports or fink.
 # More info: http://mxcl.github.com/homebrew/
 
+#############################
+## Setting up the database ##
+#############################
+
+# Create db called 'eguage'
+# Note it is for development only. Feel free to adjust as necessary
+# Create user called 'eguage' w/ pass 'eguage'.
+
+## Setting up Geo Django
+brew install postgis
+
+Follow these instructions: https://docs.djangoproject.com/en/dev/ref/contrib/gis/install/
+
+#TODO ADD MORE NOTES
+
+## Install GDAL (Python) * Note, you might have to compile from source
+workon electionegauge
+# Note, numpy must come first
+pip install numpy
+pip install GDAL
+# Test by running the following:
+>>> from osgeo import gdal
+>>> from osgeo import ogr
+>>> from osgeo import osr
+>>> from osgeo import gdal_array
+>>> from osgeo import gdalconst
+# If you have problems: http://www.gdal.org
+
+#################################
+## Getting started with Django ##
+#################################
+
 ########################################
 ## Setting up the project environment ##
 ########################################
@@ -27,6 +59,9 @@ workon electiongague
 pip install -r requirements_dev.pip
 # This will install requirements.pip also
 
-##########
-## https://convore.com/electiongauge
-##########
+
+###########################
+## Helpful project links ##
+###########################
+
+https://convore.com/electiongauge
