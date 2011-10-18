@@ -8,6 +8,14 @@ import tweepy
 
 import pymongo as mongo
 
+import collections as c
+import networkx as net
+from stemming.porter2 import stem 
+from itertools import islice
+import string
+#from lid import Lid
+
+
 """
 Tweets come into : StreamWatcherListener.on_status
  
@@ -103,75 +111,67 @@ class StreamWatcherListener(tweepy.StreamListener):
         print 'Snoozing Zzzzzz'
 
 
-
-class MongoStreamer(StreamWatcherListener):
+class myBagOfWordsStreamer(StreamWatcherListener):
 
     def __init__(self, *args, **kwargs):
-        super(MongoStreamer, self).__init__(*args, **kwargs)
-        ## initialize the Mongo connection
-        self.connection = mongo.Connection()
-        self.db = self.connection.twitter
-        self.tweets = self.db.tweets
-        self.tweets.create_index([("date", mongo.DESCENDING), ("author", mongo.ASCENDING)])
+        super(myBagOfWordsStreamer, self).__init__(*args, **kwargs)
+        self.stoplist_file="english_stoplist.txt"
+        self.stoplist={}
+        self.wordbag={}
+        self.wordnet=net.Graph()
+        for line in open(self.stoplist_file,'rU'):
+            self.stoplist[line.strip()]=1
+        print "Init complete"
         
-    def tweepy2json(self,status):
-        out={}
-        user=status.author
-        out['author']=user.screen_name
-        out['followers']=user.followers_count
-        out['profile']=user.description
-        out['text']=status.text
-        out['date']=str(status.created_at)
-        out['loc']=user.location
-        out['geo']=str(status.geo)
-        out['place']=str(status.place)
-        
-        return(out)
 
+    def addToBag(self,token):
+        if token not in wordbag:
+            wordbag[token]=1
+        else:
+            wordbag[token]+=1
+            
+    def add_or_inc_edge(self,g,f,t):
+        """
+        Adds an edge to the graph IF the edge does not exist already. 
+        If it does exist, increment the edge weight.
+        Used for quick-and-dirty calculation of projected graphs from 2-mode networks.
+        """
+        if g.has_edge(f,t):
+            g[f][t]['weight']+=1
+        else:
+            g.add_edge(f,t,weight=1)
 
-    def on_status(self, status):
-        try:
-            json=self.tweepy2json(status)
-            out=self.tweets.insert(json)
-            print self.tweets.count()
-        except:
-            # Catch any unicode errors while printing to console
-            # and just ignore them to avoid breaking application.
-            print "error:", sys.exc_info()[0]
-            pass
-
-class BagOfWordsStreamer(StreamWatcherListener):
+    def window(self, seq, n=2):
+        "Returns a sliding window (of width n) over data from the iterable"
+        "   s -> (s0,s1,...s[n-1]), (s1,s2,...,sn), ...                   "
+        it = iter(seq)
+        result = tuple(islice(it, n))
+        if len(result) == n:
+            yield result    
+        for elem in it:
+            result = result[1:] + (elem,)
+            yield result      
     
-    self.wordbag={}
+    def process_text(self,tweet):
+        text=tweet.text
+        tokens=[stem(token) for token in text.lower().split(' ') if token not in stoplist]
+        for t in tokens: addToBag(token)
+        return tokens    
 
-    def __init__(self, *args, **kwargs):
-        super(MongoStreamer, self).__init__(*args, **kwargs)
-        ## initialize the Mongo connection
-        self.connection = mongo.Connection()
-        self.db = self.connection.twitter
-        self.tweets = self.db.tweets
-        self.tweets.create_index([("date", mongo.DESCENDING), ("author", mongo.ASCENDING)])
 
-    def tweepy2json(self,status):
-        out={}
-        user=status.author
-        #out['author']=user.screen_name
-        out['followers']=user.followers_count
-        out['profile']=user.description
-        out['text']=status.text
-        out['date']=str(status.created_at)
-        out['loc']=user.location
-        out['geo']=str(status.geo)
-        out['place']=str(status.place)
-
-        return(out)
-
+    ### Run the tweet text through parse -> stem -> sliding window -> graph edges
+    def process_tweet(self,g,text):
+        tokens=process_text(text)
+        for pair in window(tokens,n=4):
+            add_or_inc_edge(g,pair[0],pair[1])
+            add_or_inc_edge(g,pair[0],pair[2])
+            add_or_inc_edge(g,pair[0],pair[3])                   
 
     def on_status(self, status):
         try:
-            json=self.tweepy2json(status)
-            out=self.tweets.insert(json)
-            print self.tweets.count()
+            tokens=self.process_tweet(status)
+            
+            print tokens
         except:
             # Catch any unicode errors while printing to console
             # and just ignore them to avoid breaking application.
@@ -183,8 +183,8 @@ def run():
     ##Twitter credentials
     username='ElectionGauge'
     password='cssgmu'
-    stream = tweepy.Stream(username, password, MongoStreamer(), timeout=None)
-    follow_list=[]#'obama,palin,romney'.split(',')
+    stream = tweepy.Stream(username, password, bfs.myBagOfWordsStreamer(), timeout=None)
+    follow_list='obama,palin,romney'.split(',')
     keywords='obama,economy,recession,jobs,afghanistan'.split(',')
     stream.filter(follow_list, keywords)
     
