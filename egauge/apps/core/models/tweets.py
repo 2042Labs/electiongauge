@@ -6,7 +6,7 @@ from .elections import Candidate
 
 
 
-class Feeds(models.Model):
+class Feed(models.Model):
     '''This is the model for feeds.'''
 
     feed_title = models.CharField(max_length=250, help_text='What do we call this feed for our purposes?')
@@ -40,7 +40,7 @@ class Stem(models.Model):
         return self.stem
 
 
-class ProcessedTweets(models.Model):
+class ProcessedTweet(models.Model):
     ''' This is a model for processed tweets. '''
 
     unique_tweet_id = models.IntegerField(help_text='Unique tweet labeled as "id".')
