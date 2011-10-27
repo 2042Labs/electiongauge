@@ -100,5 +100,4 @@ INSTALLED_APPS = (
     'django.contrib.gis',
 
     'egauge.core',
-    'egauge.geo_data',
 )

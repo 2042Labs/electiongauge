@@ -7,3 +7,8 @@ ELECTION_TYPES = (
     ('P', 'Primary'),
     ('S', 'Special'),
 )
+
+FEED_TYPES= (
+    ('C', 'Candidate feed'),
+    ('T', 'Topic feed'),
+)

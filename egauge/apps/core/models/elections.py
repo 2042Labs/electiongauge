@@ -1,11 +1,6 @@
 from django.db import models
 
-from egauge.core import choices
-from egauge.geo_data.models import * #TODO: make sure file models explicits lists models. This is sloppy.
-
-POLITICAL_OFFICES = (
-    ('','')
-)
+from .choices import *
 
 
 class ExternalURLS(models.Model):
@@ -15,26 +10,9 @@ class ExternalURLS(models.Model):
 
     class Meta:
         abstract = True
-        app_label = 'egauge_core'
 
-class Location(models.Model):
-
-    class Meta:
-        app_label = 'egauge_core'
-
-    pass
-    #city    = models.ForeignKey(City, null=True, blank=True)
-    #county  = models.ForeignKey(County, null=True, blank=True)
-    #state   = models.ForeignKey(State, null=True, blank=True)
-    #country = models.ForeignKey(Country)
-
-# a tag associated with at least one of the tweets collected
-class Tag(models.Model):
-    name = models.CharField(max_length=30)
-    description = models.CharField(max_length=200)
-    locations = models.ManyToManyField(Location, blank=True, null=True)
-
-
+    def __unicode__(self):
+        return self.linked_text, self.url
 
 
 class OfficeType(models.Model):
@@ -43,18 +21,18 @@ class OfficeType(models.Model):
     name = models.CharField(max_length=50)
     slug = models.SlugField()
 
-    class Meta:
-        app_label = 'egauge_core'
-
-
+    def __unicode__(self):
+        return self.name
 
 
 class Office(models.Model):
 
-
     office_name = models.CharField(max_length=75)
     office_type = models.ForeignKey(OfficeType)
-    location    = models.ForeignKey(Location)
+    #location    = models.ForeignKey(Location)
+
+    def __unicode__(self):
+        return self.office_name
 
 
 class Party(models.Model):
@@ -62,8 +40,11 @@ class Party(models.Model):
     abbrev   = models.CharField(max_length=2, unique=True)
     name     = models.CharField(max_length=50)
 
+    def __unicode__(self):
+        return self.party
 
-# QUESTION: Can we get this info from somewhere & auto magically populate, so we don't have to maintain.
+
+# TODO: QUESTION: Can we get this info from somewhere & auto magically populate, so we don't have to maintain.
 class Election(models.Model):
     '''an election at the state or national level; associated with Candidates'''
 
@@ -74,6 +55,9 @@ class Election(models.Model):
     office = models.ForeignKey(Office, help_text='Senate, Governor, President')
     party = models.ForeignKey(Party, null=True, blank=True, help_text="only for primaries")
     polling_date = models.DateField()
+
+    def __unicode__(self):
+        return self.display_name
 
 
 # a candidate participating in at least one election
@@ -88,12 +72,5 @@ class Candidate(models.Model):
     photo_height = models.IntegerField(blank=True, null=True)
     photo_weight = models.IntegerField(blank=True, null=True)
 
-# a processed tweet taken from Twitter and parsed for information about the
-# candidates and elections it references as well as its origin point. The text
-# of the original message is retained
-class Tweet(models.Model):
-    text = models.CharField(max_length=200) # however long tweets are?
-    candidates = models.ManyToManyField(Candidate, blank=True, null=True) # who does it reference
-    elections = models.ManyToManyField(Election, blank=True, null=True) # which election does it reference
-    tags = models.ManyToManyField(Tag, blank=True, null=True)
-    location = models.ForeignKey(Location)
+    def __unicode__(self):
+        return '%s %s' % (self.first_name, self.last_name)
