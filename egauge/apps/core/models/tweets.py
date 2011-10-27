@@ -1,7 +1,7 @@
 from django.core.exceptions import ValidationError
 from django.db import models
 
-from .choices import *
+from .choices import FEED_TYPES 
 from .elections import Candidate
 
 

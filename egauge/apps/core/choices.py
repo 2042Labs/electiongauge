@@ -8,7 +8,7 @@ ELECTION_TYPES = (
     ('S', 'Special'),
 )
 
-FEED_TYPES= (
+FEED_TYPES = (
     ('C', 'Candidate feed'),
     ('T', 'Topic feed'),
 )
