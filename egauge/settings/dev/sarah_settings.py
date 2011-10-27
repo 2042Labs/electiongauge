@@ -1,4 +1,4 @@
-from egauge.settings.common_settings import *
+from egauge.settings.common.settings import *
 
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG

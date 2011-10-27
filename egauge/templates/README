@@ -1,0 +1,8 @@
+This folder is for site wide templates only.
+Put the base.html, 404.html, & 500.html in this folder.
+Templates that are specific to the project will be in the apps/app_name/templates/app_name/.
+Related site wide static assets should go in ../static_assets/css & ../static_assets/js
+
+The goal is to be able to make the app shipable without the specifics to our site.
+So app related templates & static assets would go in ../app/app_name/templates/app_name
+& ../app/app_name/static_assets/js ../app/app_name/static_assets/css
