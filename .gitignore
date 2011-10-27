@@ -1,3 +1,4 @@
 *.pyc
 nohup.out
 .DS_Store
+data/mongod.lock
