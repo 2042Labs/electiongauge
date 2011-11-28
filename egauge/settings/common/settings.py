@@ -90,7 +90,7 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.messages.middleware.MessageMiddleware',
 )
 
-ROOT_URLCONF = 'egauge.settings.common_urls'
+ROOT_URLCONF = 'egauge.settings.common.urls'
 
 INSTALLED_APPS = (
     'django.contrib.admin',
@@ -99,5 +99,5 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.gis',
 
-    'egauge.core',
+    'egauge.apps.core',
 )
