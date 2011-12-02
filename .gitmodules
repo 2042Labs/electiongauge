@@ -1,0 +1,3 @@
+[submodule "collector/tweepy"]
+	path = collector/tweepy
+	url = git://github.com/unthingable/tweepy.git
