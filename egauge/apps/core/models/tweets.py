@@ -1,20 +1,21 @@
 from django.core.exceptions import ValidationError
 from django.db import models
 
-from .choices import FEED_TYPES 
+# TODO: Figure out why relative import is not working properly?
+#from .choices import FEED_TYPES
+from egauge.apps.core.choices import FEED_TYPES
+
 from .elections import Candidate
-
-
 
 class Feed(models.Model):
     '''This is the model for feeds.'''
 
     feed_title = models.CharField(max_length=250, help_text='What do we call this feed for our purposes?')
     feed_url = models.URLField()
-    feed_type = models.CharField(max_length=1, choices=choices.feed_types)
+    feed_type = models.CharField(max_length=1, choices=FEED_TYPES)
 
     related_candidate = models.ForeignKey(Candidate, blank=True, null=True, help_text="If candidate, then which one?")
-    related_topic = models.CharField(blank=True, help_text="If a topic, then which one?")
+    related_topic = models.CharField(max_length=150, blank=True, help_text="If a topic, then which one?")
 
     def __unicode__(self):
         return self.feed_title
@@ -65,8 +66,3 @@ class ProcessedTweet(models.Model):
 
     def __unicode__(self):
         return self.unique_tweet_id, self.date, self.raw_location
-
-
-
-
-

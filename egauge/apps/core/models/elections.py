@@ -1,7 +1,8 @@
 from django.db import models
 
-from .choices import *
-
+# TODO: Figure out why relative import is not working properly?
+#from .choices import *
+from egauge.apps.core.choices import *
 
 class ExternalURLS(models.Model):
     url = models.URLField()
@@ -49,9 +50,11 @@ class Election(models.Model):
     '''an election at the state or national level; associated with Candidates'''
 
     display_name = models.CharField(max_length=250, help_text='name of the election for general reference on front-end')
-    election_type = models.CharField(max_length=1, choices=choices.ELECTION_TYPES)
+    #election_type = models.CharField(max_length=1, choices=choices.ELECTION_TYPES)
+    election_type = models.CharField(max_length=1, choices=ELECTION_TYPES)
     upcoming_election = models.ForeignKey('self', null=True, blank=True, related_name='primaries_set')
-    location = models.ForeignKey(Location, help_text='the jurisdiction of the election')
+    #TODO: Add location back to election
+    #location = models.ForeignKey(Location, help_text='the jurisdiction of the election')
     office = models.ForeignKey(Office, help_text='Senate, Governor, President')
     party = models.ForeignKey(Party, null=True, blank=True, help_text="only for primaries")
     polling_date = models.DateField()

@@ -1,4 +1,19 @@
 *.pyc
 nohup.out
 .DS_Store
+<<<<<<< HEAD
 data/mongod.lock
+=======
+
+data/twitter.ns
+
+data/twitter.1
+
+data/twitter.0
+
+data/test_database.ns
+
+data/test_database.1
+
+data/test_database.0
+>>>>>>> .gitignore
