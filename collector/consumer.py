@@ -5,7 +5,7 @@ def callback(data, message):
 
 """
 To declare your own processor, either repurpose callback() or create another function just like that
-and add it to the list of arguments to dequeue_loop().
+and add it to the list that is the first argument to dequeue_loop().
 """
 
 if __name__=="__main__":
