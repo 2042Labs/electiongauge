@@ -4,10 +4,11 @@ from kombu import BrokerConnection, Exchange, Queue
 from kombu.common import maybe_declare
 from kombu.pools import producers
 import logging
+import sys
 
 CONN_STRING = "amqp://guest:guest@localhost:5672//"
 CONN = BrokerConnection(CONN_STRING)
-EXCHANGE = Exchange("collector", type="direct", durable=True)
+EXCHANGE = Exchange("eg-collector", type="direct", durable=True)
 QUEUE = Queue("collector-consumer", exchange=EXCHANGE, durable=True, queue_arguments={"x-message-ttl":100000})
 
 LOG = logging.getLogger("collector")
@@ -30,6 +31,7 @@ def dequeue_loop(callback):
     """
     This starts the consumer loop. Callback is a function of the form f(data, message).
     """
+    callback = hasattr(callback, "__iter__") and callback or [callback]
     with BrokerConnection(CONN_STRING) as conn:
         with conn.Consumer(queues=QUEUE, callbacks=callback) as consumer:
             # Process messages and handle events on all channels
