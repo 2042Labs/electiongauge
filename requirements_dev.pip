@@ -3,3 +3,4 @@
 ipython
 nose
 django-debug-toolbar
+django-extensions
