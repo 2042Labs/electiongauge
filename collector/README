@@ -1,0 +1,8 @@
+Twitter collector/consumer harness with RabbitMQ backend.
+
+With RabbitMQ running this will run on a single machine. Start the following processes:
+
+* twitter.collector.py
+* consumer.py
+
+For separate machines edit queue.CONN_STRING.
