@@ -31,6 +31,7 @@ TEMPLATE_DIRS = (
 
 INSTALLED_APPS = (
     'debug_toolbar',
+    'django-command-extensions',
 ) + INSTALLED_APPS
 
 # A sample logging configuration. The only tangible logging
