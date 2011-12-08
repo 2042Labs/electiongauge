@@ -5,10 +5,9 @@ import sys
 
 def callback(data, message):
     js=json.loads(data)
-    #print js
+    print "FOOO", js
     try :
         text=js['text']
-        print text
         tokens=cl.process(text)
         print tokens
     except:
