@@ -7,10 +7,11 @@ password = "cssgmu"
 def stream_starter(enqueue):
     class Listener(tweepy.StreamListener):
         def on_data(self, data):
-            enqueue(data)
+            if data.startswith('{'):
+                enqueue(data)
     auth = tweepy.auth.BasicAuthHandler(username, password)
     stream = tweepy.Stream(auth, listener=Listener())
-    stream.sample()
+    stream.sample(async=True)
     queue.LOG.info("Starting stream")
 
 if __name__ == "__main__":
