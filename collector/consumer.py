@@ -14,6 +14,8 @@ def callback(data, message):
     except:
         print ":(", sys.exc_info()
         pass
+    finally:
+        message.ack()
 
 
 
