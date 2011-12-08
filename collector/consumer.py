@@ -4,12 +4,15 @@ import cunning_linguist as cl
 import sys
 
 def callback(data, message):
-    js=json.loads(data)
-    print "FOOO", js
+    js = None
+    if data.startswith('{'):
+        js=json.loads(data)
+        print "FOOO", js
     try :
-        text=js['text']
-        tokens=cl.process(text)
-        print tokens
+        if js:
+            text=js['text']
+            tokens=cl.process(text)
+            print tokens
     except:
         print ":(", sys.exc_info()
         pass
