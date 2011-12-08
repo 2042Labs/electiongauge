@@ -40,7 +40,7 @@ def strip_punctuation(s):
 def process(text):
     try: 
         lang=gl.guessLanguageName(text)
-        print lang
+        #print lang
     except:
         return []
         
@@ -50,6 +50,11 @@ def process(text):
     else:
         tokens=[]
         for token in text.lower().split(' '):
+            try:
+                token=strip_punctuation(token).lower()
+            except TypeError:
+                print ">>>> TypeError on " + token
+                
             if (token not in stoplist) and (not token.startswith('@')): 
-                tokens.append(stem(strip_punctuation(token).lower()))
+                tokens.append(stem(token))
         return tokens

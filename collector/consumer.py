@@ -7,12 +7,13 @@ def callback(data, message):
     js = None
     if data.startswith('{'):
         js=json.loads(data)
-        print "FOOO", js
+        print '.',
     try :
         if js:
             text=js['text']
             tokens=cl.process(text)
-            print tokens
+            if len(tokens)>0:
+                print tokens 
     except:
         print ":(", sys.exc_info()
         pass

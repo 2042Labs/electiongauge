@@ -583,6 +583,8 @@ yourself
 yourselves
 z
 zero
+rt
+via
 """
 
 stoplist=[w.strip() for w in stoplist_str.split('\n') if w !='']
