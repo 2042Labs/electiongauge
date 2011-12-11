@@ -7,6 +7,7 @@ from egauge.apps.core.choices import FEED_TYPES
 
 from .elections import Candidate
 
+
 class Feed(models.Model):
     '''This is the model for feeds.'''
 

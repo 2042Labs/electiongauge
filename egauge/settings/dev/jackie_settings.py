@@ -30,8 +30,9 @@ TEMPLATE_DIRS = (
 )
 
 INSTALLED_APPS = (
+    'egauge.apps.core',
+    'django_extensions',
     'debug_toolbar',
-    'django-command-extensions',
 ) + INSTALLED_APPS
 
 # A sample logging configuration. The only tangible logging

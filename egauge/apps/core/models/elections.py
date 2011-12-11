@@ -1,8 +1,8 @@
 from django.db import models
-
 # TODO: Figure out why relative import is not working properly?
 #from .choices import *
 from egauge.apps.core.choices import *
+
 
 class ExternalURLS(models.Model):
     url = models.URLField()
@@ -11,6 +11,7 @@ class ExternalURLS(models.Model):
 
     class Meta:
         abstract = True
+        app_label = 'core'
 
     def __unicode__(self):
         return self.linked_text, self.url
@@ -25,6 +26,8 @@ class OfficeType(models.Model):
     def __unicode__(self):
         return self.name
 
+    class Meta:
+        app_label = 'core'
 
 class Office(models.Model):
 
@@ -35,6 +38,8 @@ class Office(models.Model):
     def __unicode__(self):
         return self.office_name
 
+    class Meta:
+        app_label = 'core'
 
 class Party(models.Model):
 
@@ -44,6 +49,8 @@ class Party(models.Model):
     def __unicode__(self):
         return self.party
 
+    class Meta:
+        app_label = 'core'
 
 # TODO: QUESTION: Can we get this info from somewhere & auto magically populate, so we don't have to maintain.
 class Election(models.Model):
@@ -62,6 +69,8 @@ class Election(models.Model):
     def __unicode__(self):
         return self.display_name
 
+    class Meta:
+        app_label = 'core'
 
 # a candidate participating in at least one election
 class Candidate(models.Model):
@@ -77,3 +86,6 @@ class Candidate(models.Model):
 
     def __unicode__(self):
         return '%s %s' % (self.first_name, self.last_name)
+
+    class Meta:
+        app_label = 'core'
