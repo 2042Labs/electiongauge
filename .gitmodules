@@ -1,3 +1,3 @@
-[submodule "collector/tweepy"]
+[submodule "collector/tweepy.fork"]
 	path = collector/tweepy.fork
-	url = git://github.com/unthingable/tweepy.git
+	url = git@github.com:unthingable/tweepy.git
