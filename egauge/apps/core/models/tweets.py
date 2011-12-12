@@ -1,13 +1,11 @@
 from django.core.exceptions import ValidationError
 from django.db import models
 
-# TODO: Figure out why relative import is not working properly?
-#from .choices import FEED_TYPES
-from egauge.apps.core.choices import FEED_TYPES
-
+from ..choices import FEED_TYPES
 from .elections import Candidate
 
-class Feed(models.Model):
+
+class TweetFeed(models.Model):
     '''This is the model for feeds.'''
 
     feed_title = models.CharField(max_length=250, help_text='What do we call this feed for our purposes?')
@@ -31,14 +29,20 @@ class Feed(models.Model):
     def save(self):
         self.clean()
 
+    class Meta:
+        app_label = 'core'
 
-class Stem(models.Model):
+
+class WordStem(models.Model):
     ''' Model that records stems.'''
 
     stem = models.CharField(max_length=250)
 
     def __unicode__(self):
         return self.stem
+
+    class Meta:
+        app_label = 'core'
 
 
 class ProcessedTweet(models.Model):
@@ -61,8 +65,11 @@ class ProcessedTweet(models.Model):
     state   = models.CharField(max_length=2, blank=True)
     country = models.CharField(max_length=150, blank=True)
 
-    associated_feed = models.ForeignKey(Feed, help_text='Feed that pulled this tweet.')
-    stems = models.ManyToManyField(Stem, help_text='Associated stems to this tweet.')
+    associated_feed = models.ForeignKey(TweetFeed, help_text='Feed that pulled this tweet.')
+    stems = models.ManyToManyField(WordStem, help_text='Associated stems to this tweet.')
 
     def __unicode__(self):
         return self.unique_tweet_id, self.date, self.raw_location
+
+    class Meta:
+        app_label = 'core'

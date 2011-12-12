@@ -1,2 +1,2 @@
-from elections import *
-from tweets import *
+from elections import OfficeType, Office, Party, Election, Candidate
+from tweets import ProcessedTweet, TweetFeed, WordStem

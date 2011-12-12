@@ -1,19 +1,5 @@
 from django.db import models
-
-# TODO: Figure out why relative import is not working properly?
-#from .choices import *
-from egauge.apps.core.choices import *
-
-class ExternalURLS(models.Model):
-    url = models.URLField()
-    linked_text = models.CharField(max_length=100)
-    description = models.CharField(max_length=200, blank=True)
-
-    class Meta:
-        abstract = True
-
-    def __unicode__(self):
-        return self.linked_text, self.url
+from ..choices import ELECTION_TYPES
 
 
 class OfficeType(models.Model):
@@ -25,6 +11,9 @@ class OfficeType(models.Model):
     def __unicode__(self):
         return self.name
 
+    class Meta:
+        app_label = 'core'
+        app_label = 'core'
 
 class Office(models.Model):
 
@@ -35,6 +24,9 @@ class Office(models.Model):
     def __unicode__(self):
         return self.office_name
 
+    class Meta:
+        app_label = 'core'
+
 
 class Party(models.Model):
 
@@ -44,13 +36,14 @@ class Party(models.Model):
     def __unicode__(self):
         return self.party
 
+    class Meta:
+        app_label = 'core'
 
 # TODO: QUESTION: Can we get this info from somewhere & auto magically populate, so we don't have to maintain.
 class Election(models.Model):
     '''an election at the state or national level; associated with Candidates'''
 
     display_name = models.CharField(max_length=250, help_text='name of the election for general reference on front-end')
-    #election_type = models.CharField(max_length=1, choices=choices.ELECTION_TYPES)
     election_type = models.CharField(max_length=1, choices=ELECTION_TYPES)
     upcoming_election = models.ForeignKey('self', null=True, blank=True, related_name='primaries_set')
     #TODO: Add location back to election
@@ -62,6 +55,8 @@ class Election(models.Model):
     def __unicode__(self):
         return self.display_name
 
+    class Meta:
+        app_label = 'core'
 
 # a candidate participating in at least one election
 class Candidate(models.Model):
@@ -77,3 +72,6 @@ class Candidate(models.Model):
 
     def __unicode__(self):
         return '%s %s' % (self.first_name, self.last_name)
+
+    class Meta:
+        app_label = 'core'

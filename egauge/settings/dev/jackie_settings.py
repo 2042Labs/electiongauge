@@ -30,6 +30,8 @@ TEMPLATE_DIRS = (
 )
 
 INSTALLED_APPS = (
+    'egauge.apps.core',
+    'django_extensions',
     'debug_toolbar',
 ) + INSTALLED_APPS
 
