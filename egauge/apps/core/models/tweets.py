@@ -1,10 +1,7 @@
 from django.core.exceptions import ValidationError
 from django.db import models
 
-# TODO: Figure out why relative import is not working properly?
-#from .choices import FEED_TYPES
-from egauge.apps.core.choices import FEED_TYPES
-
+from ..choices import FEED_TYPES
 from .elections import Candidate
 
 
