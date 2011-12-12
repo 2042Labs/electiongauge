@@ -9,7 +9,7 @@ import sys
 CONN_STRING = "amqp://guest:guest@localhost:5672//"
 CONN = BrokerConnection(CONN_STRING)
 EXCHANGE = Exchange("eg-collector", type="direct", durable=True)
-QUEUE = Queue("collector-consumer", exchange=EXCHANGE, durable=True, queue_arguments={"x-message-ttl":100000})
+QUEUE = Queue("collector-consumer", exchange=EXCHANGE, durable=True, queue_arguments={"x-message-ttl":1000})
 
 LOG = logging.getLogger("collector")
 logging.basicConfig(level=logging.DEBUG)
