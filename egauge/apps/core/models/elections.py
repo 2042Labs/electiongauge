@@ -28,6 +28,7 @@ class OfficeType(models.Model):
 
     class Meta:
         app_label = 'core'
+        app_label = 'core'
 
 class Office(models.Model):
 
@@ -40,6 +41,7 @@ class Office(models.Model):
 
     class Meta:
         app_label = 'core'
+
 
 class Party(models.Model):
 
