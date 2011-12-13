@@ -12,9 +12,8 @@ class OfficeType(models.Model):
         return self.name
 
     class Meta:
-        app_label = 'core'
-        app_label = 'core'
-
+        app_label = 'election'
+        
 class Office(models.Model):
 
     office_name = models.CharField(max_length=75)
@@ -25,8 +24,7 @@ class Office(models.Model):
         return self.office_name
 
     class Meta:
-        app_label = 'core'
-
+        app_label = 'election'
 
 class Party(models.Model):
 
@@ -37,7 +35,7 @@ class Party(models.Model):
         return self.party
 
     class Meta:
-        app_label = 'core'
+        app_label = 'election'
 
 # TODO: QUESTION: Can we get this info from somewhere & auto magically populate, so we don't have to maintain.
 class Election(models.Model):
@@ -56,7 +54,7 @@ class Election(models.Model):
         return self.display_name
 
     class Meta:
-        app_label = 'core'
+        app_label = 'election'
 
 # a candidate participating in at least one election
 class Candidate(models.Model):
@@ -64,7 +62,7 @@ class Candidate(models.Model):
     last_name = models.CharField(max_length=40)
     party = models.CharField(max_length=30) # 'republican', 'green', 'know-nothing'
     website = models.URLField() # more info!
-    election = models.ForeignKey(Election) # the election in which Candidate is running (ONLY ONE ELECTION PER CANDIDATE)
+    election = models.ForeignKey(Election, blank=True, null=True, help_text='Election in which the candidate is running.') # the election in which Candidate is running (ONLY ONE ELECTION PER CANDIDATE)
 
     photo = models.URLField()
     photo_height = models.IntegerField(blank=True, null=True)
@@ -74,4 +72,4 @@ class Candidate(models.Model):
         return '%s %s' % (self.first_name, self.last_name)
 
     class Meta:
-        app_label = 'core'
+        app_label = 'election'
