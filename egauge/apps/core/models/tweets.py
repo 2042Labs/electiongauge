@@ -13,7 +13,7 @@ class TwitterTopic(models.Model):
         return self.topic
 
     class Meta:
-        app_label = 'tweet'
+        app_label = 'core'
 
 
 class TweetFeed(models.Model):
@@ -44,7 +44,7 @@ class TweetFeed(models.Model):
     #    self.clean()
 
     class Meta:
-        app_label = 'tweet'
+        app_label = 'core'
 
 
 class WordStem(models.Model):
@@ -56,7 +56,7 @@ class WordStem(models.Model):
         return self.stem
 
     class Meta:
-        app_label = 'tweet'
+        app_label = 'core'
 
 class TweetWordStemAndFreq(models.Model):
     ''' Model that records freq and stems.'''
@@ -68,7 +68,7 @@ class TweetWordStemAndFreq(models.Model):
         return self.stem, self.frequency
 
     class Meta:
-        app_label = 'tweet'
+        app_label = 'core'
 
 class ProcessedTweet(models.Model):
     ''' This is a model for processed tweets. '''
@@ -96,4 +96,4 @@ class ProcessedTweet(models.Model):
         return "%s, %s, Latitude: %s, Longitude: %s" % self.unique_tweet_id, self.date, self.latitude, self.longitude
 
     class Meta:
-        app_label = 'tweet'
+        app_label = 'core'

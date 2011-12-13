@@ -12,8 +12,8 @@ class OfficeType(models.Model):
         return self.name
 
     class Meta:
-        app_label = 'election'
-        
+        app_label = 'core'
+
 class Office(models.Model):
 
     office_name = models.CharField(max_length=75)
@@ -24,7 +24,7 @@ class Office(models.Model):
         return self.office_name
 
     class Meta:
-        app_label = 'election'
+        app_label = 'core'
 
 class Party(models.Model):
 
@@ -35,7 +35,7 @@ class Party(models.Model):
         return self.party
 
     class Meta:
-        app_label = 'election'
+        app_label = 'core'
 
 # TODO: QUESTION: Can we get this info from somewhere & auto magically populate, so we don't have to maintain.
 class Election(models.Model):
@@ -54,7 +54,7 @@ class Election(models.Model):
         return self.display_name
 
     class Meta:
-        app_label = 'election'
+        app_label = 'core'
 
 # a candidate participating in at least one election
 class Candidate(models.Model):
@@ -72,4 +72,4 @@ class Candidate(models.Model):
         return '%s %s' % (self.first_name, self.last_name)
 
     class Meta:
-        app_label = 'election'
+        app_label = 'core'
