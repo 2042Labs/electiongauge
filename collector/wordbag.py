@@ -13,7 +13,7 @@ import networkx as net
 
 class wordbag(object):
 
-    def __init__():
+    def __init__(self):
         self.word_graph=net.DiGraph()
         self.counter=0
 
@@ -40,25 +40,25 @@ class wordbag(object):
         return g2       
 
     def add_tokens(self,key, tokens):
-        if counter>1000:
+        if self.counter>1000:
             self.prune()
             self.save()
-            counter=0
+            self.counter=0
             
         for token in tokens:
             self.add_word(key,token)
 
     def add_word(self,key,word):
-        word_graph.add_node(key, type='key')
-        word_graph.add_node(word, type='word')
-        self.add_or_inc_edge(word_graph,key,word)
+        self.word_graph.add_node(key, type='key')
+        self.word_graph.add_node(word, type='word')
+        self.add_or_inc_edge(key,word)
     
     def prune(self):
         self.word_graph=trim_edges(self.word_graph)
     
     def save(self):
         print "<<<<<<< SAVING WORD-GRAPH >>>>>>>"
-        net.write_pajek(word_graph,"/tmp/egauge_wordgraph.net")
+        net.write_pajek(self.word_graph,"/tmp/egauge_wordgraph.net")
     
     def load(self):
         self.word_graph=net.read_pajek("/tmp/egauge_wordgraph.net")

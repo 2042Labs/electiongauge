@@ -36,7 +36,6 @@ def strip_punctuation(s):
     return s.translate(table, string.punctuation)
 
 
-
 def process(text):
     try: 
         lang=gl.guessLanguageName(text)
@@ -53,8 +52,9 @@ def process(text):
             try:
                 token=strip_punctuation(token).lower()
             except TypeError:
-                print ">>>> TypeError on " + token
+                pass
                 
             if (token not in stoplist) and (not token.startswith('@')): 
                 tokens.append(stem(token))
+                
         return tokens
