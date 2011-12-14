@@ -25,6 +25,8 @@ def callback(data, message):
         place=geo.geocode(js)
         if place==None or place==[]:
             return
+        else:
+            newplace=[place['city'],place['state'],place['county'],place['country'],place['latitude'],place['longitude']]
 
         tokens=cl.process(text)
         if len(tokens)>0:
@@ -32,9 +34,9 @@ def callback(data, message):
         else:
             return           
             
-        js_out=json.dumps({'tokens':tokens, 'geo':place})
+        #js_out=json.dumps({'tokens':tokens, 'geo':place})
         
-        print js_out
+        print place['']
             
 #   except:
 #        print ":(", sys.exc_info()
