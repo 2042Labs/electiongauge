@@ -30,6 +30,7 @@ TEMPLATE_DIRS = (
 )
 
 INSTALLED_APPS = (
+    'django.contrib.gis',
     'egauge.apps.core',
     'django_extensions',
     'debug_toolbar',
