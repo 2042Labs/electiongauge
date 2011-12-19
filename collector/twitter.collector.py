@@ -21,9 +21,15 @@ def stream_starter(enqueue):
                 enqueue(data)
     auth = tweepy.OAuthHandler(CONSUMER_KEY, CONSUMER_SECRET)
     auth.set_access_token(ACCESS_KEY, ACCESS_SECRET)
-    stream = tweepy.Stream(auth, listener=Listener(), timeout=60, secure=True, retry_count=10)
     #stream.sample(async=True)
-    stream.filter(track=open("candidates.txt").read().split(), follow=open("keywords.txt").read().split())
+    track=open("candidates.txt").read().split()
+    follow=open("keywords.txt").read().split()
+    print("tracking %d and following %d" % (len(track),len(follow)))
+    listener=Listener()
+    stream = tweepy.Stream(auth, listener=listener, timeout=60, secure=True, retry_count=10)
+    stream.filter(track=track, async=True)
+    stream = tweepy.Stream(auth, listener=listener, timeout=60, secure=True, retry_count=10)
+    stream.filter(follow=follow, async=True)
     print("Starting stream")
 
 if __name__ == "__main__":
