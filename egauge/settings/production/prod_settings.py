@@ -15,13 +15,13 @@ DATABASES = {
         'NAME': 'egauge',
         'USER': 'egauge',
         'PASSWORD': 'egauge',
-        'HOST': 'localhost',
-        'PORT': '5432',
+        #'HOST': 'localhost',
+        #'PORT': '5432',
     }
 }
 
-ENV_DIR = '/home/jakopanda/.virtualenvs/electiongauge/'
-CODE_DIR = '/home/jakopanda/Projects/code/electiongauge/egauge'
+ENV_DIR = '/home/egauge/.virtualenvs/egauge/'
+CODE_DIR = '/opt/egauge/electiongauge/egauge'
 
 TEMPLATE_DIRS = (
     CODE_DIR,
@@ -32,8 +32,6 @@ TEMPLATE_DIRS = (
 INSTALLED_APPS = (
     'django.contrib.gis',
     'egauge.apps.core',
-    'django_extensions',
-    'debug_toolbar',
 ) + INSTALLED_APPS
 
 # A sample logging configuration. The only tangible logging

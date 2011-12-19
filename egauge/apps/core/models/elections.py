@@ -13,7 +13,6 @@ class OfficeType(models.Model):
 
     class Meta:
         app_label = 'core'
-        app_label = 'core'
 
 class Office(models.Model):
 
@@ -26,7 +25,6 @@ class Office(models.Model):
 
     class Meta:
         app_label = 'core'
-
 
 class Party(models.Model):
 
@@ -64,7 +62,7 @@ class Candidate(models.Model):
     last_name = models.CharField(max_length=40)
     party = models.CharField(max_length=30) # 'republican', 'green', 'know-nothing'
     website = models.URLField() # more info!
-    election = models.ForeignKey(Election) # the election in which Candidate is running (ONLY ONE ELECTION PER CANDIDATE)
+    election = models.ForeignKey(Election, blank=True, null=True, help_text='Election in which the candidate is running.') # the election in which Candidate is running (ONLY ONE ELECTION PER CANDIDATE)
 
     photo = models.URLField()
     photo_height = models.IntegerField(blank=True, null=True)

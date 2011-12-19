@@ -1,5 +1,10 @@
 import tweepy
 import queue
+try:
+    import eventlet
+    eventlet.monkey_patch()
+except:
+    pass
 
 username = "ElectionGauge"
 password = "cssgmu"

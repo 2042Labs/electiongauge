@@ -2,25 +2,55 @@ import queue
 import simplejson as json
 import cunning_linguist as cl
 import sys
+import wordbag
+import geocoder
+
+bag=wordbag.wordbag()
+geo=geocoder.geocoder()
 
 def callback(data, message):
     js = None
     if data.startswith('{'):
         js=json.loads(data)
-        print '.',
-    try :
-        if js:
+        #print '.',
+ #   try :
+    if js:
+        
+        try :
             text=js['text']
-            tokens=cl.process(text)
-            if len(tokens)>0:
-                print tokens 
-    except:
-        print ":(", sys.exc_info()
-        pass
-    finally:
-        message.ack()
+        except KeyError:
+            return
+
+        #geocode what we can and throw away what can't be saved
+        place=geo.geocode(js)
+        if place==None or place==[]:
+            return
+        else:
+            newplace=[place['city'],place['state'],place['county'],place['country'],place['latitude'],place['longitude']]
+
+        tokens=cl.process(text)
+        if len(tokens)>0:
+            bag.add_tokens('stream',tokens)
+        else:
+            return           
+            
+        #js_out=json.dumps({'tokens':tokens, 'geo':place})
+        
+        print place['']
+            
+#   except:
+#        print ":(", sys.exc_info()
+#        pass
+#    finally:
+#        if message is not None:
+#            message.ack()
 
 
+def test():
+    file="data.json"
+    for line in open(file,'rb'):
+        print '>',
+        callback(line,None)
 
 """
 To declare your own processor, either repurpose callback() or create another function just like that
