@@ -1,3 +1,13 @@
 ## This file includes shared Twitter credentials
 Username, Password
 ElectionGauge,cssgmu
+
+
+
+Access level	 Read-only 
+Consumer key	zSxtDpHrZ8GpSimb1k4DA
+Consumer secret	t1D97sSvjumR6iWLjvl1q95V0gs7ieWVyLJpzQAnBUw
+Request token URL	https://api.twitter.com/oauth/request_token
+Authorize URL	https://api.twitter.com/oauth/authorize
+Access token URL	https://api.twitter.com/oauth/access_token
+Callback URL	None
