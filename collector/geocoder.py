@@ -43,8 +43,6 @@ class geocoder(object):
         try:        
             geo=str(js['geo'])
             if geo and geo != 'None':
-                print "<<<<>>>>"
-                print '%r' % geo
                 l.log(l.DEBUG, ">>>> Geo "+geo)
                 return(self._parse_geo(geo))
         except KeyError:
@@ -80,7 +78,7 @@ class geocoder(object):
 
     def _parse_ut(self, loc):
         """Parse UberTwitter location Strings -- e.g. ÜT: 40.708612,-73.92678"""
-        lat, lon = loc.split()[1].split(',')
+        lat, lon = loc.split()[1].split(',')d
         return self._reverse_geocode(lat,lon)
 
     def _parse_iphone(self, loc):
@@ -134,71 +132,3 @@ class geocoder(object):
         
 
         
-"""
-        place="pl:"
-        geo="geo:"
-        coords="coords:"
-        try:
-            coords+=str(js['coordinates'])
-        except KeyError:
-            pass      
-        try:        
-            geo+=str(js['geo'])
-        except KeyError:
-            pass  
-        try:    
-            place+=str(js['place'])
-        except KeyError:
-            pass
-    
-        print place, coords, geo, location
-"""        
-        
-        
-"""
-
-#for row, cells in sheet.rows().iteritems(): # or sheet.cols()
-for cells in sheet:
-    #print row # prints row number
-    try:
-        name=cells[5]
-        loc=cells[12]
-        point=cells[13]
-        
-        #check if location has been seen before
-        #if loc in cache
-        
-        place=''
-        if loc is not '':
-                place=yy.geocode(loc)
-        
-        elif point is not '':         
-                place=yy.reverse(parse_point(point))
-        
-        if place is not '':
-            loc=[place['country'], place['city'],place['state'],place['postal'],place['latitude'],place['longitude']]
-            points_out.writerow([place['latitude'],place['longitude']])
-        else:
-            loc=['','','','','','']
-        
-        print i, name, loc
-        
-        outrow=loc
-        
-        if '4sq' in ''.join(cells[18:]):
-            outrow.append('Yes')
-        else:
-            outrow.append('No')
-
-        outrow.extend(cells)
-                
-        out.writerow(outrow)
-        
-        i+=1
-        
-        
-    except Exception, e:
-        print e
-        continue
-    
-"""
