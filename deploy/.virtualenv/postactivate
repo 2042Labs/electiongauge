@@ -1,0 +1,9 @@
+#!/bin/bash
+# This hook is run after every virtualenv is activated.
+proj_name=$(echo $VIRTUAL_ENV|awk -F'/' '{print $NF}')
+
+if [ $proj_name = "electiongauge" ]; then
+   cd /opt/egauge/electiongauge/
+   export DJANGO_SETTINGS_MODULE='egauge.settings.production.prod_settings'
+   echo "DJANGO_SETTINGS_MODULE set to:" $DJANGO_SETTINGS_MODULE
+fi
