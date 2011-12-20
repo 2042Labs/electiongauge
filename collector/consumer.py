@@ -6,12 +6,14 @@ import wordbag
 import geocoder
 import logging as l
 from mapmaker import mapmaker
+from timeline_maker import timeline_maker
 import traceback
 
 bag=wordbag.wordbag()
 geo=geocoder.geocoder()
 out=file("/tmp/test_output.json",'ab')
 mm=mapmaker()
+tm=timeline_maker()
 
 def callback(data, message):
     js = None
@@ -46,6 +48,9 @@ def callback(data, message):
             
             ##Map buzz of candidates per zip code
             mm.add_to_map(place,tokens)
+            
+            ##Add tweet to the timeline
+            tm.add_to_timeline(tokens)
             
             
             

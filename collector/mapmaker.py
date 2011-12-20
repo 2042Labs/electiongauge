@@ -28,7 +28,7 @@ class mapmaker(object):
         for key in can.candidates.keys():
             try :
                 out=open(f+key+".json",'rb')
-                self.zip_can([key])=json.loads(out.read())           
+                self.zip_can[key]=json.loads(out.read())           
             except IOError:            
                 self.zip_can[key]={}
         
@@ -47,7 +47,7 @@ class mapmaker(object):
             
     def _intersect(self, a, b):
         """intersect 2 lists and return the result"""
-         return list(set(a) & set(b))
+        return list(set(a) & set(b))
          
     def add_to_map(self, location, tokens):
         self.count+=1

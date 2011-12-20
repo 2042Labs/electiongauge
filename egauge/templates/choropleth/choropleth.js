@@ -7,7 +7,7 @@ var svg = d3.select("#chart")
 
 var counties = svg.append("g")
     .attr("id", "counties")
-    .attr("class", "Blues");
+    .attr("class", "RdBu");
 
 var states = svg.append("g")
     .attr("id", "states");
@@ -27,12 +27,8 @@ d3.json("../../data/d3/us-states.json", function(json) {
       .attr("d", path);
 });
 
-d3.json("../../data/json/zipmap_obama.json", function(json) {
-  data = json;
-  counties.selectAll("path")
-      .attr("class", quantize);
-});
+
 
 function quantize(d) {
-  return "q" + Math.min(8, ~~(data[d.id] * 9 / 12)) + "-9";
+  return "q" + Math.min(8, ~~(data[d.id]+4 * 9 / 12)) + "-9";
 }
