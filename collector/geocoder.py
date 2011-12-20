@@ -78,7 +78,7 @@ class geocoder(object):
 
     def _parse_ut(self, loc):
         """Parse UberTwitter location Strings -- e.g. ÜT: 40.708612,-73.92678"""
-        lat, lon = loc.split()[1].split(',')d
+        lat, lon = loc.split()[1].split(',')
         return self._reverse_geocode(lat,lon)
 
     def _parse_iphone(self, loc):

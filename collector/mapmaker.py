@@ -17,26 +17,36 @@ import bsddb
 import csv
 
 class mapmaker(object):
-   # self.count=0
-#    self.zip_can={}
+    """MapMaker is a class that generates county-by-county maps from tweets"""
     
     def __init__(self, interval=10): 
         self.count=0
         self.interval=interval
         self.zip_can={}
+        ## check for existing files -- maybe we crashed and need to recover?
+        f="../egauge/data/json/zipmap_"
         for key in can.candidates.keys():
-            self.zip_can[key]={}
+            try :
+                out=open(f+key+".json",'rb')
+                self.zip_can([key])=json.loads(out.read())           
+            except IOError:            
+                self.zip_can[key]={}
+        
+        ## Initialize the zip-to-county table from a CSV file. 
         self.db=self._read_ziptable()
+        
             
     ### read the csv file 
-    def _read_ziptable(self):
+    def _read_ziptable(self,filename='zip2county.csv'):
+        """Read a translation table zipcode -> county code"""
         db={}
-        for row in csv.reader(open('zip2county.csv','rU')):
+        for row in csv.reader(open(filename,'rU')):
             db[row[0]]=row[1]
         return db
         
             
-    def intersect(self, a, b):
+    def _intersect(self, a, b):
+        """intersect 2 lists and return the result"""
          return list(set(a) & set(b))
          
     def add_to_map(self, location, tokens):
@@ -53,9 +63,9 @@ class mapmaker(object):
                 except KeyError: 
                     return
                     
-                print zzip, county
+                #print zzip, county
                 
-                if self.intersect(tokens,can.candidates[key]) != []:
+                if self._intersect(tokens,can.candidates[key]) != []:
                     if county in self.zip_can[key]:
                         self.zip_can[key][county]+=1
                     else:
@@ -63,12 +73,13 @@ class mapmaker(object):
                     
         ##if it's been a while since the last write, do a write now, and resent counter
         if self.count >= self.interval:
-            self.dump()
+            self._dump()
             self.count=0            
                     
-    def dump(self):
+    def _dump(self):
+        """Write out map data as JSON files"""
         l.info(">>>>Writing out choropleths")
-        f="/tmp/zipmap_"
+        f="../egauge/data/json/zipmap_"
         for key in self.zip_can.keys():
             out=open(f+key+".json",'wb')
             out.write(json.dumps(self.zip_can[key]))
