@@ -29,8 +29,15 @@ TEMPLATE_DIRS = (
     ENV_DIR + 'lib/python2.6/site-packages/debug_toolbar/templates',
 )
 
+STATIC_ROOT = '/Users/jakopanda/Projects/code/electiongauge_static'
+STATIC_URL = '/static'
+STATICFILES_DIRS = (
+    CODE_DIR + "/static",
+)
+
 INSTALLED_APPS = (
     'django.contrib.gis',
+    'django.contrib.staticfiles',
     #'egauge.apps.core',
     'django_extensions',
     'debug_toolbar',
@@ -59,5 +66,5 @@ LOGGING = {
     }
 }
 
-
+ROOT_URLCONF = 'egauge.settings.dev.jackie_urls'
 INTERNAL_IPS = ('127.0.0.1',)
