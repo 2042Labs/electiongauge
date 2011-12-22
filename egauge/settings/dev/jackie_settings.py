@@ -9,19 +9,19 @@ ADMINS = (
 
 MANAGERS = ADMINS
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.contrib.gis.db.backends.postgis',
-        'NAME': 'egauge',
-        'USER': 'egauge',
-        'PASSWORD': 'egauge',
-        'HOST': 'localhost',
-        'PORT': '5432',
-    }
-}
+#DATABASES = {
+#    'default': {
+#        'ENGINE': 'django.contrib.gis.db.backends.postgis',
+#        'NAME': 'egauge',
+#        'USER': 'egauge',
+#        'PASSWORD': 'egauge',
+#        'HOST': 'localhost',
+#        'PORT': '5432',
+#    }
+#}
 
-ENV_DIR = '/home/jakopanda/.virtualenvs/electiongauge/'
-CODE_DIR = '/home/jakopanda/Projects/code/electiongauge/egauge'
+ENV_DIR = '/Users/jakopanda/.virtualenvs/electiongauge/'
+CODE_DIR = '/Users/jakopanda/Projects/code/electiongauge/egauge'
 
 TEMPLATE_DIRS = (
     CODE_DIR,
@@ -31,7 +31,7 @@ TEMPLATE_DIRS = (
 
 INSTALLED_APPS = (
     'django.contrib.gis',
-    'egauge.apps.core',
+    #'egauge.apps.core',
     'django_extensions',
     'debug_toolbar',
 ) + INSTALLED_APPS

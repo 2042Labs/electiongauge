@@ -21,4 +21,4 @@ urllib
 # Required for geodjango / postgis to work
 # Numpy must be installed before gdal
 numpy==1.6.1
-gdal==1.8
+# gdal==1.8

@@ -97,5 +97,7 @@ INSTALLED_APPS = (
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
-    'django.contrib.gis',
+
+    'egauge.apps.public',
+    #'django.contrib.gis',
 )
