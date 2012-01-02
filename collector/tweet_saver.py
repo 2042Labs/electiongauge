@@ -16,12 +16,12 @@ import logging as l
 
 class tweet_saver(object):
     
-    def __init__(self,name="tweet",private=False):
+    def __init__(self,name="tweet",private=False,limit=1000):
         self.name=name
         self.s3=s3writer.s3writer()
         self.toWrite = ""
         self.counter = 0
-        self.limit = 100
+        self.limit = limit
         self.private=private
         l.log(l.INFO, "Initialized <<tweet_saver>>")
 

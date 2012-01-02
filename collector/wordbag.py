@@ -54,11 +54,12 @@ class wordbag(object):
         self.add_or_inc_edge(key,word)
     
     def prune(self):
-        self.word_graph=trim_edges(self.word_graph)
+        self.word_graph=self.trim_edges(self.word_graph)
     
     def save(self):
         print "<<<<<<< SAVING WORD-GRAPH >>>>>>>"
         net.write_pajek(self.word_graph,"/tmp/egauge_wordgraph.net")
     
     def load(self):
+        print "<<<<<<<< Loaing Word-Graph>>>>>>>"
         self.word_graph=net.read_pajek("/tmp/egauge_wordgraph.net")
