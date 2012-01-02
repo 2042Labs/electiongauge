@@ -31,7 +31,7 @@ TEMPLATE_DIRS = (
 
 INSTALLED_APPS = (
     'django.contrib.gis',
-    'egauge.apps.core',
+    'egauge.apps.public',
 ) + INSTALLED_APPS
 
 # A sample logging configuration. The only tangible logging

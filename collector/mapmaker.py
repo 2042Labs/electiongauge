@@ -15,6 +15,7 @@ import candidates as can
 import logging as l
 import bsddb
 import csv
+import s3writer
 
 class mapmaker(object):
     """MapMaker is a class that generates county-by-county maps from tweets"""
@@ -24,16 +25,11 @@ class mapmaker(object):
         self.interval=interval
         self.zip_can={}
         ## check for existing files -- maybe we crashed and need to recover?
-        f="../egauge/data/json/zipmap_"
-        for key in can.candidates.keys():
-            try :
-                out=open(f+key+".json",'rb')
-                self.zip_can[key]=json.loads(out.read())           
-            except IOError:            
-                self.zip_can[key]={}
+        self._read_data(s3=False, file=True)
         
         ## Initialize the zip-to-county table from a CSV file. 
         self.db=self._read_ziptable()
+        self.s3=s3writer.s3writer()
         
             
     ### read the csv file 
@@ -73,7 +69,8 @@ class mapmaker(object):
                     
         ##if it's been a while since the last write, do a write now, and resent counter
         if self.count >= self.interval:
-            self._dump()
+            #self._dump()
+            self._write_data()
             self.count=0            
                     
     def _dump(self):
@@ -83,7 +80,36 @@ class mapmaker(object):
         for key in self.zip_can.keys():
             out=open(f+key+".json",'wb')
             out.write(json.dumps(self.zip_can[key]))
-            
+
+    def _read_data(self, from_s3=False, from_file=True):
+        """reads and initializes the tables; switch s3 to True to read from S3, file to True to read from local files; only one can be set at a time"""
+
+        if from_s3:
+            f="zipmap_"
+            for key in can.candidates.keys():
+                data=self.s3.read(f+key+".json")
+                self.zip_can[key]=json.loads(data)
+        if from_file:
+            f="../egauge/data/json/zipmap_"
+            for key in can.candidates.keys():
+             try :
+                 out=open(f+key+".json",'rb')
+                 self.zip_can[key]=json.loads(out.read())           
+             except IOError:            
+                 self.zip_can[key]={}        
+
+    def _write_data(self, to_s3=True, to_file=True):
+        """Write out map data as JSON files to S3, to a local file OR BOTH"""
+        l.info(">>>>Writing out choropleths")
+        if to_file:
+            f="../egauge/data/json/zipmap_"
+            for key in self.zip_can.keys():
+                out=open(f+key+".json",'wb')
+                out.write(json.dumps(self.zip_can[key]))
+        if to_s3:
+            f="zipmap_"
+            for key in self.zip_can.keys():
+                self.s3.write(f+key+".json", json.dumps(self.zip_can[key]))
             
     def test(self):
         infile=open('/tmp/test_output.json')
@@ -92,4 +118,5 @@ class mapmaker(object):
             tokens=js['tokens']
             geo=js['geo']
             self.add_to_map(geo,tokens)
+            
             
