@@ -12,6 +12,7 @@ networkx
 # Required for collector
 tweepy
 kombu
+boto
 
 #required for geocoder
 geopy
