@@ -5,15 +5,20 @@ import sys
 import wordbag
 import geocoder
 import logging as l
+import traceback
+
 from mapmaker import mapmaker
 from timeline_maker import timeline_maker
-import traceback
+from tweet_saver import tweet_saver
+
 
 bag=wordbag.wordbag()
 geo=geocoder.geocoder()
 out=file("/tmp/test_output.json",'ab')
 mm=mapmaker()
 tm=timeline_maker()
+ts=tweet_saver("tweet")
+proc=tweet_saver("processed")
 
 def callback(data, message):
     js = None
@@ -43,8 +48,11 @@ def callback(data, message):
             
             l.log(l.DEBUG, ":)")
             
+            ts.add(data)
+            
             js_out=json.dumps({'tokens':tokens, 'geo':place})+"\n"
-            out.write(js_out)
+            #out.write(js_out)
+            proc.add(js_out)
             
             ##Map buzz of candidates per zip code
             mm.add_to_map(place,tokens)
@@ -52,11 +60,11 @@ def callback(data, message):
             ##Add tweet to the timeline
             tm.add_to_timeline(tokens)
             
-            
-            
+    except KeyboardInterrupt:
+        return
     except:
         #exc_type, exc_value, exc_traceback = sys.exc_info()
-        #traceback.print_tb(exc_traceback)
+        #traceback.print_stack(exc_traceback)
         l.log(l.ERROR,":( >>" + str(sys.exc_info()))
         pass
     finally:

@@ -21,15 +21,17 @@ class mapmaker(object):
     """MapMaker is a class that generates county-by-county maps from tweets"""
     
     def __init__(self, interval=10): 
+        self.s3=s3writer.s3writer()
+        self.db=self._read_ziptable()
+        
         self.count=0
         self.interval=interval
         self.zip_can={}
         ## check for existing files -- maybe we crashed and need to recover?
-        self._read_data(s3=False, file=True)
+        self._read_data(from_s3=False, from_file=True)
         
         ## Initialize the zip-to-county table from a CSV file. 
-        self.db=self._read_ziptable()
-        self.s3=s3writer.s3writer()
+        
         
             
     ### read the csv file 
