@@ -2,7 +2,6 @@ import queue
 import simplejson as json
 import cunning_linguist as cl
 import sys
-import wordbag
 import geocoder
 import logging as l
 import traceback
@@ -10,15 +9,15 @@ import traceback
 from mapmaker import mapmaker
 from timeline_maker import timeline_maker
 from tweet_saver import tweet_saver
+from discourse_mapper import discourse_mapper
 
-
-bag=wordbag.wordbag()
 geo=geocoder.geocoder()
 out=file("/tmp/test_output.json",'ab')
 mm=mapmaker()
 tm=timeline_maker()
-ts=tweet_saver("tweet")
-proc=tweet_saver("processed")
+ts=tweet_saver("tweet",limit=1000,private=True)
+proc=tweet_saver("processed",limit=1000,private=True)
+dm = discourse_mapper(interval=100)
 
 def callback(data, message):
     js = None
@@ -37,16 +36,10 @@ def callback(data, message):
             place=geo.geocode(js)
             if place==None or place==[]:
                 return
-            else:
-                newplace=[place['city'],place['state'],place['county'],place['country'],place['latitude'],place['longitude']]
 
             tokens=cl.process(text)
-            if len(tokens)>0:
-                bag.add_tokens('stream',tokens)
-            else:
+            if len(tokens)==0:
                 return           
-            
-            l.log(l.DEBUG, ":)")
             
             ts.add(data)
             
@@ -60,8 +53,11 @@ def callback(data, message):
             ##Add tweet to the timeline
             tm.add_to_timeline(tokens)
             
-    except KeyboardInterrupt:
-        return
+            ## add tokens to the discourse mapper
+            dm.add(place,tokens)
+            
+            l.log(l.DEBUG, ":)")
+            
     except:
         #exc_type, exc_value, exc_traceback = sys.exc_info()
         #traceback.print_stack(exc_traceback)

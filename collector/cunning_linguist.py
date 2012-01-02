@@ -13,7 +13,7 @@ import os
 from english_stoplist import stoplist
 
 import collections as c
-from stemming.porter2 import stem 
+import stemming.porter2 as stem 
 from itertools import islice
 import string
 import guess_language as gl
@@ -55,6 +55,6 @@ def process(text):
                 pass
                 
             if (token not in stoplist) and (not token.startswith('@')): 
-                tokens.append(stem(token))
+                tokens.append(stem.stem(token))
                 
         return tokens
