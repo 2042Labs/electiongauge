@@ -12,7 +12,8 @@ import os
 import simplejson as json
 import s3writer
 import datetime
-import logging as l
+import logging
+l=logging.getLogger("TWEET_SAVER")
 
 class tweet_saver(object):
     
@@ -23,9 +24,10 @@ class tweet_saver(object):
         self.counter = 0
         self.limit = limit
         self.private=private
-        l.log(l.INFO, "Initialized <<tweet_saver>>")
+        l.info("Initialized <<tweet_saver>>, limit %d", self.limit)
 
     def add(self,js):
+        l.debug("add: "+str(self.counter))
         self.counter += 1    
         self.toWrite+=js+"\n"
         
@@ -35,6 +37,6 @@ class tweet_saver(object):
             self.counter=0
     
     def _dump(self):
-        l.log(l.DEBUG, "TWEET_SAVER > saving buffer")
+        l.info("saving buffer")
         time=str(datetime.datetime.now())
         self.s3.write(self.name+time,self.toWrite,private=self.private)

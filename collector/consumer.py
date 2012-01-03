@@ -3,14 +3,19 @@ import simplejson as json
 import cunning_linguist as cl
 import sys
 import geocoder
-import logging as l
+import logging
 import traceback
+
+l=logging.getLogger("CONSUMER")
 
 from mapmaker import mapmaker
 from timeline_maker import timeline_maker
 from tweet_saver import tweet_saver
 from discourse_mapper import discourse_mapper
 
+
+
+##### INITIALIZE MAJOR COMPONENTS
 geo=geocoder.geocoder()
 out=file("/tmp/test_output.json",'ab')
 mm=mapmaker(interval=100)
@@ -18,6 +23,21 @@ tm=timeline_maker(interval=100)
 ts=tweet_saver("tweet",limit=1000,private=False)
 proc=tweet_saver("processed",limit=1000,private=False)
 dm = discourse_mapper(interval=100)
+
+
+
+#### SET UP LOG LEVELS #####
+logging.getLogger("boto").setLevel(logging.INFO)
+logging.getLogger("geopy").setLevel(logging.INFO)
+logging.getLogger("GEOCODER").setLevel(logging.INFO)
+logging.getLogger("MAPMAKER").setLevel(logging.INFO)
+logging.getLogger("GEOCODER").setLevel(logging.INFO)
+logging.getLogger("TIMELINE").setLevel(logging.INFO)
+logging.getLogger("TWEET_SAVER").setLevel(logging.INFO)
+logging.getLogger("DMAP").setLevel(logging.DEBUG)
+logging.getLogger("CONSUMER").setLevel(logging.DEBUG)
+
+
 
 def callback(data, message):
     js = None
@@ -56,12 +76,12 @@ def callback(data, message):
             ## add tokens to the discourse mapper
             dm.add(place,tokens)
             
-            l.log(l.DEBUG, ":)")
+            l.debug(".")
             
     except:
         #exc_type, exc_value, exc_traceback = sys.exc_info()
         #traceback.print_stack(exc_traceback)
-        l.log(l.ERROR,":( >>" + str(sys.exc_info()))
+        l.error(":( >>" + str(sys.exc_info()))
         pass
     finally:
         if message is not None:

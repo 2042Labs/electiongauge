@@ -11,7 +11,7 @@ import sys
 import os
 import simplejson as json
 from collections import defaultdict
-import logging as l
+import logging 
 
 import cunning_linguist as cl
 import candidates as can
@@ -20,6 +20,8 @@ import s3writer
 
 from wordbag import wordbag
 import networkx as net
+
+l=logging.getLogger("DMAP")
 
 class discourse_mapper(object):
 
@@ -39,6 +41,7 @@ class discourse_mapper(object):
 
 
     def _load_corpus(self):
+        l.debug("Loading corpus")
         for key in can.candidates.keys():
             try:
                 text=open('../egauge/data/corpus/'+key+'.txt','rb').read()
@@ -51,6 +54,7 @@ class discourse_mapper(object):
         self.wb.prune()
     
     def add(self,place,tokens):
+        l.debug("adding tokens"+str(self.counter))
         self.counter+=1
         #print place['country']
         if place['country'] == 'United States':

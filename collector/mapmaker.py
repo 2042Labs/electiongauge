@@ -12,10 +12,12 @@ import os
 import simplejson as json
 from collections import defaultdict
 import candidates as can
-import logging as l
+import logging
 import bsddb
 import csv
 import s3writer
+
+l=logging.getLogger("MAP_MAKER")
 
 class mapmaker(object):
     """MapMaker is a class that generates county-by-county maps from tweets"""
@@ -86,6 +88,7 @@ class mapmaker(object):
     def _read_data(self, from_s3=False, from_file=True):
         """reads and initializes the tables; switch s3 to True to read from S3, file to True to read from local files; only one can be set at a time"""
 
+        l.info("Initializing MapMaker")
         if from_s3:
             f="zipmap_"
             for key in can.candidates.keys():

@@ -24,7 +24,8 @@ import bsddb
 import json
 import unicodedata
 import urllib
-import logging as l
+import logging
+l=logging.getLogger("GEOCODER")
 
 
 class geocoder(object):
@@ -34,7 +35,7 @@ class geocoder(object):
         yahoo_secret='eeae1d9c40a5a5eec7aea5505c90c0115b799e9f'
         self.yy=yy_module.Yahoo(yahoo_api_key)
         self.db = bsddb.btopen('/tmp/location_cache.db', 'c')
-        l.log(l.INFO, 'Geocoder initialized')
+        l.info('Geocoder initialized')
 
     def geocode(self,js):
         location=""
@@ -43,7 +44,7 @@ class geocoder(object):
         try:        
             geo=str(js['geo'])
             if geo and geo != 'None':
-                l.log(l.DEBUG, ">>>> Geo "+geo)
+                l.debug(">>>> Geo "+geo)
                 return(self._parse_geo(geo))
         except KeyError:
             pass
@@ -60,7 +61,7 @@ class geocoder(object):
         """parse the Twitter geo string
         {u'type': u'Point', u'coordinates': [40.14117668, -74.8490068]}
         """
-        l.log(l.DEBUG, geo + str(type(geo)))
+        l.debug(geo + str(type(geo)))
         try :
             if type(geo)==str: 
                 geo=json.loads(geo)
@@ -92,7 +93,7 @@ class geocoder(object):
             place=yy.reverse(float(lat),float(lon))
             return place
         except:
-            l.log(l.DEBUG,'reverse geo FAIL')
+            l.debug('reverse geo FAIL')
             return None
 
     def _geocode_loc(self,loc):
@@ -111,7 +112,7 @@ class geocoder(object):
         
         ## check if we have already cached this data
         if self.db.has_key(key):
-            l.log(l.DEBUG,"@<<<< read"+loc+" "+key)
+            l.debug("@<<<< read"+loc+" "+key)
             return json.loads(self.db[key])
         
         ## GEOCODE!!!    
@@ -124,7 +125,7 @@ class geocoder(object):
             
         ## Check if geocoding went OK, otherwise return None
         if place != '':
-            l.log(l.DEBUG,"@ write >>>>"+loc+" "+key)
+            l.debug("@ write >>>>"+loc+" "+key)
             self.db[key]=json.dumps(place)
             return place
         else:

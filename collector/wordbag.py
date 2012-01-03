@@ -10,6 +10,9 @@ Copyright (c) 2011 __MyCompanyName__. All rights reserved.
 import sys
 import os
 import networkx as net
+import logging
+
+l=logging.getLogger("WORDBAG")
 
 class wordbag(object):
 
@@ -65,9 +68,9 @@ class wordbag(object):
         self.word_graph=self.trim_edges(self.word_graph)
     
     def save(self):
-        print "<<<<<<< SAVING WORD-GRAPH >>>>>>>"
+        l.debug("<<<<<<< SAVING WORD-GRAPH >>>>>>>")
         net.write_pajek(self.word_graph,"/tmp/egauge_wordgraph.net")
     
     def load(self):
-        print "<<<<<<<< Loaing Word-Graph>>>>>>>"
+        l.debug("<<<<<<<< Loaing Word-Graph>>>>>>>")
         self.word_graph=net.read_pajek("/tmp/egauge_wordgraph.net")
