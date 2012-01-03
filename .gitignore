@@ -1,12 +1,10 @@
 *.pyc
 nohup.out
 .DS_Store
-collector/data.json
+collector/*.json
 egauge/data/*.json
 
-<<<<<<< HEAD
 data/mongod.lock
-=======
 
 data/twitter.ns
 
@@ -19,4 +17,3 @@ data/test_database.ns
 data/test_database.1
 
 data/test_database.0
->>>>>>> .gitignore
