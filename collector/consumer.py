@@ -35,7 +35,7 @@ logging.getLogger("GEOCODER").setLevel(logging.INFO)
 logging.getLogger("TIMELINE").setLevel(logging.INFO)
 logging.getLogger("TWEET_SAVER").setLevel(logging.INFO)
 logging.getLogger("DMAP").setLevel(logging.INFO)
-logging.getLogger("CONSUMER").setLevel(logging.INFO)
+logging.getLogger("CONSUMER").setLevel(logging.DEBUG)
 
 
 
