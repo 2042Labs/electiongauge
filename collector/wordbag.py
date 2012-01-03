@@ -13,9 +13,10 @@ import networkx as net
 
 class wordbag(object):
 
-    def __init__(self):
+    def __init__(self,interval=1000):
         self.word_graph=net.DiGraph()
         self.counter=0
+        self.interval=interval
 
     def add_or_inc_edge(self,f,t):
         """
@@ -39,19 +40,26 @@ class wordbag(object):
                 g2.add_edge(f,to,edata)
         return g2       
 
-    def add_tokens(self,key, tokens):
-        if self.counter>1000:
+    def add_tokens(self,key, tokens):      
+        for token in tokens:
+            self.add_word(key,token)          
+
+
+    def add_word(self,key,word):
+        try:    
+            a_word=word.encode('ascii')
+        except :
+            return
+        
+        self.counter+=1
+        self.word_graph.add_node(key, type='k')
+        self.word_graph.add_node(a_word, type='w')
+        self.add_or_inc_edge(key,a_word)
+        
+        if self.counter>self.interval:
             self.prune()
             self.save()
             self.counter=0
-            
-        for token in tokens:
-            self.add_word(key,token)
-
-    def add_word(self,key,word):
-        self.word_graph.add_node(key, type='key')
-        self.word_graph.add_node(word, type='word')
-        self.add_or_inc_edge(key,word)
     
     def prune(self):
         self.word_graph=self.trim_edges(self.word_graph)
