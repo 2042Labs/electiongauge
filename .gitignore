@@ -2,6 +2,7 @@
 nohup.out
 .DS_Store
 collector/data.json
+egauge/data/*.json
 
 <<<<<<< HEAD
 data/mongod.lock
