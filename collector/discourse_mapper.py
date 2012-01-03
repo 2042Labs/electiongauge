@@ -59,7 +59,7 @@ class discourse_mapper(object):
             self.wb.add_tokens(state,tokens)
             
         if self.counter>=self.interval:
-            counter=0
+            self.counter=0
             self._compute_metrics()
             self._normalize()
             self._write_data()
