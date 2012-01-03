@@ -13,11 +13,11 @@ from discourse_mapper import discourse_mapper
 
 geo=geocoder.geocoder()
 out=file("/tmp/test_output.json",'ab')
-mm=mapmaker(interval=10)
-tm=timeline_maker(interval=10)
-ts=tweet_saver("tweet",limit=1000,private=True)
-proc=tweet_saver("processed",limit=1000,private=True)
-dm = discourse_mapper(interval=10)
+mm=mapmaker(interval=100)
+tm=timeline_maker(interval=100)
+ts=tweet_saver("tweet",limit=1000,private=False)
+proc=tweet_saver("processed",limit=1000,private=False)
+dm = discourse_mapper(interval=100)
 
 def callback(data, message):
     js = None

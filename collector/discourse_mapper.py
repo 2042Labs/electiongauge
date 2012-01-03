@@ -28,6 +28,7 @@ class discourse_mapper(object):
         self.wb=wordbag()
         self.interval=interval
         self.counter=0
+        self.gauges=defaultdict(dict)
         
         ## try to load previous state of the discourse mapper. 
         ## On failure, rebuild corpus
@@ -59,12 +60,13 @@ class discourse_mapper(object):
             
         if self.counter>=self.interval:
             counter=0
-            self._write_data(self.compute_metrics())
+            self._compute_metrics()
+            self._normalize()
+            self._write_data()
+            
 
 
-    def compute_metrics(self):
-        gauges=defaultdict(dict)
-
+    def _compute_metrics(self):
         ## for every state, every candidate, compute a linguistic match
         for state in st.states:
             try:
@@ -76,21 +78,27 @@ class discourse_mapper(object):
                 cs= set(self.wb.word_graph[key].keys())
                 ## Compute intersection between state discourse and candidate
                 p=cs & ss
-                gauges[state][key]=float(len(p))/float(len(ss)+len(cs))
-        
-        return gauges
+                self.gauges[state][key]=float(len(p))/float(len(ss)+len(cs))
+                
+    def _normalize(self):
+        for state in self.gauges.keys():
+            total=sum(self.gauges[state].values())
+            if total==0: continue
+            for can in self.gauges[state].keys():
+                self.gauges[state][can]=self.gauges[state][can]/total
 
-    def _write_data(self, gauges, to_s3=True, to_file=True):
+
+    def _write_data(self, to_s3=True, to_file=True):
         """Write out map data as JSON files to S3, to a local file OR BOTH"""
         l.debug(">>>>Writing out discourse gauges")
         
         if to_file:
             f="../egauge/data/json/gauge.json"
             out=open(f,'wb')
-            out.write(json.dumps(gauges))
+            out.write(json.dumps(self.gauges))
         if to_s3:
             f="gauges.json"
-            self.s3.write(f, json.dumps(gauges))
+            self.s3.write(f, json.dumps(self.gauges))
 
     def test(self):
         infile=open('/tmp/test_output.json')
