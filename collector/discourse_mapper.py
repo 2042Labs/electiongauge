@@ -94,7 +94,7 @@ class discourse_mapper(object):
 
     def _write_data(self, to_s3=True, to_file=True):
         """Write out map data as JSON files to S3, to a local file OR BOTH"""
-        l.debug(">>>>Writing out discourse gauges")
+        l.info(">>>>Writing out discourse gauges")
         
         if to_file:
             f="../egauge/data/json/gauge.json"

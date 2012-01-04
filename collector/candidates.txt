@@ -1,8 +1,9 @@
-@MittRomney
-@RonPaul
-@MicheleBachmann
-@GovernorPerry
-@THEHermanCain
-@NewtGingrich
-@BarackObama
-
+MittRomney
+RonPaul
+MicheleBachmann
+GovernorPerry
+THEHermanCain
+NewtGingrich
+BarackObama
+JonHuntsman
+Jon2012HQ

@@ -69,8 +69,8 @@ class wordbag(object):
     
     def save(self):
         l.debug("<<<<<<< SAVING WORD-GRAPH >>>>>>>")
-        net.write_pajek(self.word_graph,"/tmp/egauge_wordgraph.net")
+        net.write_weighted_edgelist(self.word_graph,"/tmp/egauge_wordgraph.net")
     
     def load(self):
         l.debug("<<<<<<<< Loaing Word-Graph>>>>>>>")
-        self.word_graph=net.read_pajek("/tmp/egauge_wordgraph.net")
+        self.word_graph=net.read_weighted_edgelist("/tmp/egauge_wordgraph.net")
