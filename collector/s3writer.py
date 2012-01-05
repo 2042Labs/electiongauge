@@ -25,7 +25,7 @@ class s3writer(object):
         self.private_bucket= self.conn.create_bucket('egauge_private')
         self.dir={}
         
-    def write(self,key,content,private=False):
+    def write(self,name,content,private=False):
         """Store *content* in a location designated by *key* in a public bucket (default) or private bucket (if private=True)"""
         if private:
             bucket=self.private_bucket
@@ -33,10 +33,11 @@ class s3writer(object):
             bucket=self.public_bucket
         
         k = Key(bucket)
-        k.key=key
+        k.key=name
+        #k.set_metadata('content-type', 'text/plain')
         k.set_contents_from_string(content)
         if not private:
-            self.dir[key]=str(datetime.datetime.now())
+            self.dir[name]=str(datetime.datetime.now())
         
     def read(self,key,private=False):
         """get content from a location designated by *key* in a public bucket (default) or private bucket (if private=True)"""

@@ -11,6 +11,7 @@ import sys
 import os
 import networkx as net
 import logging
+import s3writer as s3
 
 l=logging.getLogger("WORDBAG")
 
@@ -50,9 +51,11 @@ class wordbag(object):
 
     def add_word(self,key,word):
         try:    
-            a_word=word.encode('ascii')
+            a_word=word.encode('ascii').strip()
         except :
             return
+        
+        if word=="": return
         
         self.counter+=1
         self.word_graph.add_node(key, type='k')
