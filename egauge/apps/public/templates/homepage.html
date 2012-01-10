@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% block main %}
+  <head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+    <title>Testing EGauge Map</title>{{ STATIC_URL }}
+    <script type="text/javascript" src="{{ STATIC_URL }}/js_css/d3/d3.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}/js_css/d3/d3.geo.js"></script>
+    <link type="text/css" rel="stylesheet" href="{{ STATIC_URL }}/js_css/choropleth/choropleth.css"/>
+    <link type="text/css" rel="stylesheet" href="{{ STATIC_URL }}/js_css/d3/lib/colorbrewer/colorbrewer.css"/>
+  </head>
+  <body>
+    <div id="chart"></div>
+    <script type="text/javascript" src="{{ STATIC_URL }}/js_css/choropleth/choropleth.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}/js_css/choropleth/data_js/obama_data.js"></script>
+    Testing EGauge Map
+  </body>
+{% endblock main %}

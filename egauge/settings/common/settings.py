@@ -50,7 +50,7 @@ STATIC_ROOT = ''
 
 # URL prefix for static files.
 # Example: "http://media.lawrence.com/static/"
-STATIC_URL = '/static/'
+STATIC_URL = '/static'
 
 # URL prefix for admin static files -- CSS, JavaScript and images.
 # Make sure to use a trailing slash.
@@ -97,11 +97,11 @@ MIDDLEWARE_CLASSES = (
 ROOT_URLCONF = 'egauge.settings.common.urls'
 
 INSTALLED_APPS = (
-    'django.contrib.admin',
-    'django.contrib.auth',
-    'django.contrib.contenttypes',
-    'django.contrib.sessions',
-
+#    'django.contrib.admin',
+#    'django.contrib.auth',
+#    'django.contrib.contenttypes',
+#    'django.contrib.sessions',
+    'django.contrib.staticfiles',
     #'egauge.apps.public',
     #'django.contrib.gis',
 )

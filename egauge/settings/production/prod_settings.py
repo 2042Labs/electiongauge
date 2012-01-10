@@ -25,12 +25,18 @@ CODE_DIR = '/opt/egauge/electiongauge/egauge'
 
 TEMPLATE_DIRS = (
     CODE_DIR,
-    ENV_DIR + 'lib/python2.6/site-packages/django/contrib/admin/templates',
-    ENV_DIR + 'lib/python2.6/site-packages/debug_toolbar/templates',
+    ENV_DIR + 'lib/python2.6/site-packages/django/contrib/admin',
+    ENV_DIR + 'lib/python2.6/site-packages/debug_toolbar',
+)
+
+STATIC_ROOT = '/Users/jakopanda/Projects/code/electiongauge_static'
+STATIC_URL = '/static'
+STATICFILES_DIRS = (
+    CODE_DIR + "/static",
 )
 
 INSTALLED_APPS = (
-    'django.contrib.gis',
+#    'django.contrib.gis',
     'egauge.apps.public',
 ) + INSTALLED_APPS
 

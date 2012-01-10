@@ -44,7 +44,7 @@ pip install GDAL
 # Run the following after your spatial database is set up
 # This will create the egauge database based off of the template.
 # More into on creating the template: https://docs.djangoproject.com/en/dev/ref/contrib/gis/install/#spatialdb-template
-createdb -T template_postgis egauge 
+createdb -T template_postgis egauge
 
 #################################
 ## Getting started with Django ##

@@ -24,23 +24,23 @@ ENV_DIR = '/Users/jakopanda/.virtualenvs/electiongauge/'
 CODE_DIR = '/Users/jakopanda/Projects/code/electiongauge/egauge'
 
 TEMPLATE_DIRS = (
-    CODE_DIR,
-    ENV_DIR + 'lib/python2.6/site-packages/django/contrib/admin/templates',
-    ENV_DIR + 'lib/python2.6/site-packages/debug_toolbar/templates',
+    CODE_DIR + '/templates',
+    ENV_DIR + 'lib/python2.6/site-packages/django/contrib/admin',
+    ENV_DIR + 'lib/python2.6/site-packages/debug_toolbar',
 )
 
 STATIC_ROOT = '/Users/jakopanda/Projects/code/electiongauge_static'
 STATIC_URL = '/static'
 STATICFILES_DIRS = (
-    CODE_DIR + "/static",
+    CODE_DIR + "/static_assets",
 )
 
 INSTALLED_APPS = (
-    'django.contrib.gis',
-    'django.contrib.staticfiles',
+    #'django.contrib.gis',
     #'egauge.apps.core',
     'django_extensions',
     'debug_toolbar',
+    'egauge.apps.public',
 ) + INSTALLED_APPS
 
 # A sample logging configuration. The only tangible logging
