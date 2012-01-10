@@ -12,7 +12,7 @@
     <![endif]-->
 
     <!-- Le styles -->
-    <link href="../1.4.0/bootstrap.css" rel="stylesheet">
+    <link href="{{ STATIC_URL }}/js_css/bootstrap/1.4.0/bootstrap.css" rel="stylesheet">
     <style type="text/css">
       body {
         padding-top: 60px;
@@ -74,6 +74,7 @@
       </footer>
 
     </div> <!-- /container -->
+{% block main %}{% endblock %}
 
   </body>
 </html>
