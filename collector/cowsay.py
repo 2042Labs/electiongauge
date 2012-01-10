@@ -9,6 +9,7 @@ class cowstatus(object):
     def __init__(self):
         self.s3=s3writer.s3writer()
         self.start=datetime.datetime.now()
+        self.count=0
 
     def cowsay(self, str, length=40):
         return self.build_bubble(str, length) + self.build_cow()
@@ -59,17 +60,18 @@ class cowstatus(object):
             return [ "|", "|" ]
         
     def uptime(self):
-        delta=self.start-datetime.datetime.now()
+        delta=datetime.datetime.now()-self.start
         days=delta.days
         s=delta.seconds
         hours, remainder = divmod(s, 3600)
         minutes, seconds = divmod(remainder, 60)
         return(days,hours,minutes,seconds)
     
-    def update_status(self, count):
+    def update_status(self, count=1):
+        self.count+=count
         header="<html><body><pre>\n"
         status="Uptime: %d days, %d hours %d min, %d sec \n"%self.uptime()
-        status+="Absorbed %d messages"%count
+        status+="Absorbed %d messages"%self.count
         footer="</pre></body></html>"
         self.s3.write("stats.html",header+self.cowsay(status)+footer)
         #print(self.cowsay(status))

@@ -12,6 +12,7 @@ from mapmaker import mapmaker
 from timeline_maker import timeline_maker
 from tweet_saver import tweet_saver
 from discourse_mapper import discourse_mapper
+from cowsay import cowstatus
 
 
 
@@ -21,8 +22,9 @@ out=file("/tmp/test_output.json",'ab')
 mm=mapmaker(interval=100)
 tm=timeline_maker(interval=100)
 ts=tweet_saver("tweet",limit=1000,private=False)
-proc=tweet_saver("processed",limit=1000,private=False)
+proc=tweet_saver("processed",limit=1000,private=True)
 dm = discourse_mapper(interval=100)
+status=cowstatus()
 
 
 
@@ -34,7 +36,7 @@ logging.getLogger("MAPMAKER").setLevel(logging.INFO)
 logging.getLogger("GEOCODER").setLevel(logging.INFO)
 logging.getLogger("TIMELINE").setLevel(logging.INFO)
 logging.getLogger("TWEET_SAVER").setLevel(logging.INFO)
-logging.getLogger("DMAP").setLevel(logging.DEBUG)
+logging.getLogger("DMAP").setLevel(logging.INFO)
 logging.getLogger("CONSUMER").setLevel(logging.DEBUG)
 
 
@@ -49,8 +51,8 @@ def callback(data, message):
         
             try :
                 text=js['text']
-                author=js['user']
-                print author
+                author=js['user']['screen_name']
+                l.debug(author)
             except KeyError:
                 return
 
@@ -76,9 +78,10 @@ def callback(data, message):
             tm.add_to_timeline(tokens)
             
             ## add tokens to the discourse mapper
-            dm.add(place,tokens)
+            dm.add(place,tokens,author)
             
             l.debug(".")
+            status.update_status()
             
     except:
         #exc_type, exc_value, exc_traceback = sys.exc_info()

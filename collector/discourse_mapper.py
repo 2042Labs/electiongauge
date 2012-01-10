@@ -35,9 +35,13 @@ class discourse_mapper(object):
         ## try to load previous state of the discourse mapper. 
         ## On failure, rebuild corpus
         try:
+            l.info("Loading WordGraph corpus...")
             wb.load()
+            l.info("Success!")
         except:        
+            l.info("FAIL -- loading the corpus from source instead")
             self._load_corpus()
+            l.info("Success!")
 
 
     def _load_corpus(self):
@@ -53,10 +57,13 @@ class discourse_mapper(object):
     
         self.wb.prune()
     
-    def add(self,place,tokens):
+    def add(self,place,tokens,user):
         l.debug("adding tokens"+str(self.counter))
         self.counter+=1
         #print place['country']
+        
+        self._update_corpus(tokens,user)
+        
         if place['country'] == 'United States':
             state=place['statecode']
             #print state, tokens
@@ -69,6 +76,13 @@ class discourse_mapper(object):
             self._write_data()
             
 
+    def _update_corpus(self,tokens,user):
+        for key in can.candidates.keys(): 
+            if user in can.candidates[key]:
+                l.info("updating cropus for"+user)
+                self.wb.add_tokens(key,tokens)
+                open('../egauge/data/corpus/'+key+'.txt','a').write(str(tokens)+"\n")
+                
 
     def _compute_metrics(self):
         ## for every state, every candidate, compute a linguistic match
