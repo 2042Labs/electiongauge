@@ -3,6 +3,7 @@ nohup.out
 .DS_Store
 collector/*.json
 egauge/data/*.json
+egauge/static_assets/data/json/*.json
 
 collector/consumer.out
 

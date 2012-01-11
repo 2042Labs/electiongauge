@@ -17,6 +17,7 @@ import bsddb
 import csv
 import datetime
 import s3writer
+import settings
 
 l=logging.getLogger("TIMELINE")
 
@@ -30,7 +31,7 @@ class timeline_maker(object):
         self.timelines={}
         self.word_timelines={}
         ## check for existing files -- maybe we crashed and need to recover?
-        f="../egauge/data/json/timeline_"
+        f=settings.jsonPath+"timeline_"
         l.info("Initializing timelines")
         for key in can.candidates.keys():
             try :
@@ -76,7 +77,7 @@ class timeline_maker(object):
     def _dump(self):
         """Write out map data as JSON files"""
         l.info(">>>>Writing out timelines")
-        f="../egauge/data/json/timeline_"
+        f=settings.jsonPath+"timeline_"
         for key in self.timelines.keys():
             out=open(f+key+".json",'wb')
             out.write(json.dumps(self.timelines[key]))
@@ -86,34 +87,38 @@ class timeline_maker(object):
         """Write out map data as JSON files to S3, to a local file OR BOTH"""
         l.info(">>>>Writing out timelines")
         if to_file:
-            f="../egauge/data/json/timeline_"
+            f=settings.jsonPath+"timeline_"
             for key in self.timelines.keys():
                 out=open(f+key+".json",'wb')
                 out.write(json.dumps(self.timelines[key]))
         if to_s3:
-            f="zipmap_"
+            f="timeline_"
             for key in self.timelines.keys():
                 self.s3.write(f+key+".json", json.dumps(self.timelines[key]))
-    
+
+    def test(self):
+        infile=open(settings.jsonPath+'test_output.json')
+        for line in infile:
+            js=json.loads(line)
+            tokens=js['tokens']
+            self.add_to_timeline(tokens)
+
+
+"""   
     def _pivot(self):
-        """write out stacked timelines"""
+        ##write out stacked timelines
         stacked=defaultdict(dict)
         for key1 in self.timelines.keys():
             for key2 in self.timelines[key1]:
                 stacked[key2][key1]=self.timelines[key1][key2]
         return stacked
         
-    def _dump_pivot(self):
+    def _dump_pivot(self, to_s3=True, to_file=True):
         
         data=self._pivot()
-        f="../egauge/data/json/timeline_stacked.csv"
+        f=settings.jsonPath+"timeline_stacked.csv"
         fields=['time'].extend(self.timelines.keys())
         w.writerows(data)
+"""
 
-    def test(self):
-        infile=open('/tmp/test_output.json')
-        for line in infile:
-            js=json.loads(line)
-            tokens=js['tokens']
-            self.add_to_timeline(tokens)
 

@@ -17,6 +17,7 @@ import cunning_linguist as cl
 import candidates as can
 import states as st
 import s3writer
+import settings
 
 from wordbag import wordbag
 import networkx as net
@@ -48,7 +49,7 @@ class discourse_mapper(object):
         l.debug("Loading corpus")
         for key in can.candidates.keys():
             try:
-                text=open('../egauge/data/corpus/'+key+'.txt','rb').read()
+                text=open(settings.corpusPath+key+'.txt','rb').read()
             except: 
                 continue
         
@@ -81,7 +82,7 @@ class discourse_mapper(object):
             if user in can.candidates[key]:
                 l.info("updating cropus for"+user)
                 self.wb.add_tokens(key,tokens)
-                open('../egauge/data/corpus/'+key+'.txt','a').write(str(tokens)+"\n")
+                open(settings.corpusPath+key+'.txt','a').write(str(tokens)+"\n")
                 
 
     def _compute_metrics(self):
@@ -111,7 +112,7 @@ class discourse_mapper(object):
         l.info(">>>>Writing out discourse gauges")
         
         if to_file:
-            f="../egauge/data/json/gauge.json"
+            f=settings.jsonPath+"gauge.json"
             out=open(f,'wb')
             out.write(json.dumps(self.gauges))
         if to_s3:
