@@ -15,8 +15,8 @@ import logging as l
 
 s3=s3writer.s3writer()
 
-manifest=["zipmap_"+key+".js" for key in candidates.keys()]
-manifest.extend(["timeline_"+key+".js" for key in candidates.keys()])
+manifest=["zipmap_"+key+".json" for key in candidates.keys()]
+manifest.extend(["timeline_"+key+".json" for key in candidates.keys()])
 manifest.extend(['gauges.js'])
 
 for key in manifest:
