@@ -17,7 +17,7 @@ s3=s3writer.s3writer()
 
 manifest=["zipmap_"+key+".json" for key in candidates.keys()]
 manifest.extend(["timeline_"+key+".json" for key in candidates.keys()])
-manifest.extend(['gauges.js'])
+manifest.extend(['gauges.json'])
 
 for key in manifest:
     filename=settings.jsonPath+key
