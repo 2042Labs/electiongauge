@@ -15,6 +15,7 @@ import candidates as c
 import requests
 import BeautifulSoup as soup
 import logging
+import settings
 
 l=logging.getLogger('DebateParser')
 
@@ -65,4 +66,4 @@ for p in paras:
 for key in speaker_map.keys(): 
     if speaker_map[key] in c.candidates:
         l.info("updating cropus for"+key)
-        open('../egauge/data/corpus/'+speaker_map[key]+'.txt','a').write(speaker_content[key]+"\n")
+        open(settings.corpusPath+speaker_map[key]+'.txt','a').write(speaker_content[key]+"\n")

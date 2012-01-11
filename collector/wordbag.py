@@ -12,6 +12,7 @@ import os
 import networkx as net
 import logging
 import s3writer as s3
+import settings
 
 l=logging.getLogger("WORDBAG")
 
@@ -71,9 +72,9 @@ class wordbag(object):
         self.word_graph=self.trim_edges(self.word_graph)
     
     def save(self):
-        l.debug("<<<<<<< SAVING WORD-GRAPH >>>>>>>")
-        net.write_weighted_edgelist(self.word_graph,"/tmp/egauge_wordgraph.net")
+        l.info("<<<<<<< SAVING WORD-GRAPH >>>>>>>")
+        net.write_weighted_edgelist(self.word_graph,settings.corpusPath+"egauge_wordgraph.net")
     
     def load(self):
-        l.debug("<<<<<<<< Loaing Word-Graph>>>>>>>")
-        self.word_graph=net.read_weighted_edgelist("/tmp/egauge_wordgraph.net")
+        l.info("<<<<<<<< Loading Word-Graph>>>>>>>")
+        self.word_graph=net.read_weighted_edgelist(settings.corpusPath+"egauge_wordgraph.net")

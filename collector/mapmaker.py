@@ -16,6 +16,7 @@ import logging
 import bsddb
 import csv
 import s3writer
+import settings
 
 l=logging.getLogger("MAP_MAKER")
 
@@ -40,7 +41,7 @@ class mapmaker(object):
     def _read_ziptable(self,filename='zip2county.csv'):
         """Read a translation table zipcode -> county code"""
         db={}
-        for row in csv.reader(open(filename,'rU')):
+        for row in csv.reader(open(settings.geoPath+filename,'rU')):
             db[row[0]]=row[1]
         return db
         
@@ -80,7 +81,7 @@ class mapmaker(object):
     def _dump(self):
         """Write out map data as JSON files"""
         l.info(">>>>Writing out choropleths")
-        f="../egauge/data/json/zipmap_"
+        f=settings.jsonPath+"zipmap_"
         for key in self.zip_can.keys():
             out=open(f+key+".json",'wb')
             out.write(json.dumps(self.zip_can[key]))
@@ -95,7 +96,7 @@ class mapmaker(object):
                 data=self.s3.read(f+key+".json")
                 self.zip_can[key]=json.loads(data)
         if from_file:
-            f="../egauge/data/json/zipmap_"
+            f=settings.jsonPath+"zipmap_"
             for key in can.candidates.keys():
              try :
                  out=open(f+key+".json",'rb')
@@ -107,7 +108,7 @@ class mapmaker(object):
         """Write out map data as JSON files to S3, to a local file OR BOTH"""
         l.info(">>>>Writing out choropleths")
         if to_file:
-            f="../egauge/data/json/zipmap_"
+            f=settings.jsonPath+"zipmap_"
             for key in self.zip_can.keys():
                 out=open(f+key+".json",'wb')
                 out.write(json.dumps(self.zip_can[key]))
@@ -117,7 +118,7 @@ class mapmaker(object):
                 self.s3.write(f+key+".json", json.dumps(self.zip_can[key]))
             
     def test(self):
-        infile=open('/tmp/test_output.json')
+        infile=open(settings.jsonPath+"test_output.json")
         for line in infile:
             js=json.loads(line)
             tokens=js['tokens']
