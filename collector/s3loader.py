@@ -21,8 +21,8 @@ manifest.extend(['gauges.js'])
 
 for key in manifest:
     filename=settings.jsonPath+key
-    l.debug("fetching "+key+" to "+filename)
+    print("fetching "+key+" to "+filename)
     f=open(filename,'wb')
     f.write(s3.read(key))
 
-l.info("Updated local gauges")
+print("Updated local gauges")
