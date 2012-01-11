@@ -4,6 +4,8 @@ nohup.out
 collector/*.json
 egauge/data/*.json
 
+collector/consumer.out
+
 data/mongod.lock
 
 data/twitter.ns
