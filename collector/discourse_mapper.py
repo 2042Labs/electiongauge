@@ -116,7 +116,7 @@ class discourse_mapper(object):
             out=open(f,'wb')
             out.write(json.dumps(self.gauges))
         if to_s3:
-            f="gauges.json"
+            f="gauges.js"
             self.s3.write(f, json.dumps(self.gauges))
 
     def test(self):

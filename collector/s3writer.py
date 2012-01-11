@@ -19,6 +19,9 @@ class s3writer(object):
     def __init__(self):
         aws_access_key='AKIAIC65JLYAEJA7IRBA'
         aws_secret_key='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'
+    
+        
+        self.acl="public-read"
         self.base_url='data.electiongauge.com'
         self.conn = S3Connection(aws_access_key, aws_secret_key)
         self.public_bucket= self.conn.create_bucket('egauge')
@@ -31,13 +34,17 @@ class s3writer(object):
             bucket=self.private_bucket
         else:
             bucket=self.public_bucket
+            
+            
+        nm=name.split('.')[0]
+#        js_content="var "+nm+" = " + content + ";"
         
         k = Key(bucket)
         k.key=name
-        #k.set_metadata('content-type', 'text/plain')
-        k.set_contents_from_string(content)
-        if not private:
-            self.dir[name]=str(datetime.datetime.now())
+        k.set_contents_from_string(content,headers={'Content-Type': 'text/plain', 'Access-Control-Allow-Origin': '*'})
+        k.set_acl(self.acl)
+#        if not private:
+#            self.dir[name]=str(datetime.datetime.now())
         
     def read(self,key,private=False):
         """get content from a location designated by *key* in a public bucket (default) or private bucket (if private=True)"""
