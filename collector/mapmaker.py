@@ -91,7 +91,7 @@ class mapmaker(object):
 
         l.info("Initializing MapMaker")
         if from_s3:
-            f=.json
+            f="zipmap_"
             for key in can.candidates.keys():
                 data=self.s3.read(f+key+".json")
                 self.zip_can[key]=json.loads(data)
