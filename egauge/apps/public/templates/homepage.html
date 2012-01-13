@@ -1,18 +1,34 @@
 {% extends "base.html" %}
 
-{% block main %}
-  <head>
-    <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
-    <title>Testing EGauge Map</title>{{ STATIC_URL }}
+{# TODO: Move metadata info to this template, title, descript, etc. #}
+
+{% block page_head %}
     <script type="text/javascript" src="{{ STATIC_URL }}/js_css/d3/d3.js"></script>
     <script type="text/javascript" src="{{ STATIC_URL }}/js_css/d3/d3.geo.js"></script>
     <link type="text/css" rel="stylesheet" href="{{ STATIC_URL }}/js_css/choropleth/choropleth.css"/>
     <link type="text/css" rel="stylesheet" href="{{ STATIC_URL }}/js_css/d3/lib/colorbrewer/colorbrewer.css"/>
-  </head>
-  <body>
+
+
+{% endblock %}
+
+
+{% block main %}
+<div class="row">
+  <div class="span16">
+    <h2>#TODO Map1 Headline</h2>
     <div id="chart"></div>
     <script type="text/javascript" src="{{ STATIC_URL }}/js_css/choropleth/choropleth.js"></script>
-    <script type="text/javascript" src="{{ STATIC_URL }}/js_css/choropleth/data_js/obama_data.js"></script>
-    Testing EGauge Map
-  </body>
+    <!--<script type="text/javascript" src="https://s3.amazonaws.com/egauge/zipmap_romney.js"></script>-->
+    <!--<script>-->
+    <!--  console.log(zipmap_romney)-->
+    <!--</script>-->
+
+
+    <script type="text/javascript" src="https://s3.amazonaws.com/egauge/tweets/romney_data.js"></script>
+    <!---->
+
+
+
+  </div>
+</div>
 {% endblock main %}
