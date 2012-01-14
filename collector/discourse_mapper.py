@@ -112,7 +112,7 @@ class discourse_mapper(object):
         l.info(">>>>Writing out discourse gauges")
         
         if to_file:
-            f=settings.jsonPath+"gauge.json"
+            f=settings.jsonPath+"gauges.json"
             out=open(f,'wb')
             out.write(json.dumps(self.gauges))
         if to_s3:
