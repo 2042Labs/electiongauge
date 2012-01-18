@@ -1,15 +1,7 @@
 <VirtualHost *:80>
 	ServerAdmin jackiekazil@gmail.com
-</VirtualHost>
-
-<VirtualHost *:443>
-    ServerName http://electiongauge.com/
-    ServerAdmin jkazil@loc.gov
-
-    SSLEngine on
-    SSLCipherSuite ALL:-LOW:-NULL
-    SSLCertificateFile "/etc/ssl/certs/hassium.cert.pem"
-    SSLCertificateKeyFile "/etc/ssl/private/hassium.key"
+	ServerName www.electiongauge.com
+	ServerAlias electiongauge.com
 
 	ErrorLog /var/log/apache2/egauge.errors.log
 	LogLevel warn
