@@ -1,0 +1,17 @@
+<VirtualHost *:80>
+	ServerAdmin jackiekazil@gmail.com
+	ServerName www.electiongauge.com
+	ServerAlias electiongauge.com
+
+	ErrorLog /var/log/apache2/egauge.errors.log
+	LogLevel warn
+
+	CustomLog /var/log/apache2/egauge.access.log combined
+
+    WSGIDaemonProcess egauge user=egauge group=egauge inactivity-timeout=600 display-name=egauge home=/opt/egauge/electiongauge python-path=/opt/eguage/egauge-env/lib/python2.6/site-packages
+
+    WSGIProcessGroup egauge
+    WSGIScriptAlias / /opt/egauge/deploy/egauge.wsgi
+
+    Alias /admin_media/ /opt/eguage/egauge-env/lib/python2.6/site-packages/django/contrib/admin/media/
+</VirtualHost>

@@ -19,10 +19,10 @@ import settings
 
 l=logging.getLogger('DebateParser')
 
-url="http://www.washingtonpost.com/blogs/election-2012/post/new-hampshire-debate-meet-the-press--facebook-debate-transcript/2012/01/08/gIQAqYMDjP_blog.html"
+url="http://blogs.suntimes.com/sweet/2012/01/south_carolina_gop_cnn_debate_.html"
 
 speaker_map={
-'GREGORY': 'gregory',
+'KING': 'king',
 'PAUL': 'ronpaul',
 'PERRY': 'perry',
 'GINGRICH': 'gingrich',
@@ -31,18 +31,25 @@ speaker_map={
 'HUNTSMAN': 'huntsman'
 }
 
-
+done=False
 current_speaker=""
-
 speaker_content={}
 
+
+
+"""
 #get the debate text 
 html=requests.get(url).content
 sp=soup.BeautifulSoup(html)
 content=sp.findAll(id='entrytext')
-done=False
-
 paras=str(content[0]).replace('<p>','').replace('\n','').split('</p>')
+"""
+
+
+
+f=open(settings.corpusPath+'CSDebate.txt')
+paras=[p for p in f]
+
 
 for key in speaker_map.keys():
     speaker_content[key]=""
@@ -62,6 +69,8 @@ for p in paras:
     if not done:    
         if current_speaker != '':
             speaker_content[current_speaker]+=p.replace(current_speaker,'')
+            
+    done=False
 
 for key in speaker_map.keys(): 
     if speaker_map[key] in c.candidates:
