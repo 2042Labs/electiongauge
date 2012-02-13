@@ -5,82 +5,72 @@
 {% block page_head %}
     <script type="text/javascript" src="{{ STATIC_URL }}/js_css/d3/d3.js"></script>
     <script type="text/javascript" src="{{ STATIC_URL }}/js_css/d3/d3.geo.js"></script>
-
     <link type="text/css" rel="stylesheet" href="{{ STATIC_URL }}/js_css/choropleth/choropleth.css"/>
     <link type="text/css" rel="stylesheet" href="{{ STATIC_URL }}/js_css/d3/lib/colorbrewer/colorbrewer.css"/>
 
-<script type="text/javascript" src="{{ STATIC_URL }}/js_css/bootstrap/js/bootstrap-tabs.js"></script>
-<script>
-
-{% for c in active_candidates %}
-  $('#{{ c.0 }}').tab('show')
-{% endfor %}
-</script>
-
+    <script type="text/javascript" src="http://twitter.github.com/bootstrap/assets/js/jquery.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}/js_css/bootstrap/bootstrap-tab.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}/js_css/bootstrap/bootstrap-transition.js"></script>
 
 {% endblock %}
 
 
 {% block main %}
 <div class="row">
-  <div class="span16">
-    <h2>#TODO Map1 Headline</h2>
 
+  <div class="span12">
 
-
-
-
-
-<ul class="tabs">
-  <li><a href="#home" data-toggle="tab">Home</a></li>
-  <li><a href="#profile" data-toggle="tab">Profile</a></li>
-  <li><a href="#messages" data-toggle="tab">Messages</a></li>
-  <li><a href="#settings" data-toggle="tab">Settings</a></li>
+<ul class="nav nav-tabs">
+            <li class="active"><a href="#home" data-toggle="tab">Home</a></li>
+            <li><a href="#profile" data-toggle="tab">Profile</a></li>
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown <b class="caret"></b></a>
+              <ul class="dropdown-menu">
+                <li><a href="#dropdown1" data-toggle="tab">@fat</a></li>
+                <li><a href="#dropdown2" data-toggle="tab">@mdo</a></li>
+              </ul>
+            </li>
 </ul>
 
-<div class="tab-content">
-  <div class="tab-pane active" id="home">home</div>
-  <div class="tab-pane" id="profile">profile</div>
-  <div class="tab-pane" id="messages">messages</div>
-  <div class="tab-pane" id="settings">settings</div>
-</div>
-
-
-
-
-
-
-
-    <ul class="tabs">
-      {% for c in active_candidates %}
-          <li {% if c == active_candidates.0 %}class="active"{% endif %}><a href="#{{ c.0 }}" data-toggle="tab">{{ c.1 }}</a></li>
-      {% endfor %}
-    </ul>
-
-    <div class="tab-content">
-
-      <script type="text/javascript" src="{{ STATIC_URL }}/js_css/choropleth/choropleth.js"></script>
-       <div id="chart"></div>
-            <script type="text/javascript" src="{{ STATIC_URL }}/js_css/choropleth/data_js/test_data.js"></script>
-      {% for c in active_candidates %}
-          <div class="tab-pane{% if c == active_candidates.0 %} fade in active{% else %} fade{% endif %}" id="{{ c.0 }}">
-          {{ c.0 }}
+<div id="myTabContent" class="tab-content">
+            <div class="tab-pane fade in active" id="home">
+              <p>Raw denim you probably haven't heard of them jean shorts Austin. Nesciunt tofu stumptown aliqua, retro synth master cleanse. Mustache cliche tempor, williamsburg carles vegan helvetica. Reprehenderit butcher retro keffiyeh dreamcatcher synth. Cosby sweater eu banh mi, qui irure terry richardson ex squid. Aliquip placeat salvia cillum iphone. Seitan aliquip quis cardigan american apparel, butcher voluptate nisi qui.</p>
+            </div>
+            <div class="tab-pane fade" id="profile">
+              <p>Food truck fixie locavore, accusamus mcsweeney's marfa nulla single-origin coffee squid. Exercitation +1 labore velit, blog sartorial PBR leggings next level wes anderson artisan four loko farm-to-table craft beer twee. Qui photo booth letterpress, commodo enim craft beer mlkshk aliquip jean shorts ullamco ad vinyl cillum PBR. Homo nostrud organic, assumenda labore aesthetic magna delectus mollit. Keytar helvetica VHS salvia yr, vero magna velit sapiente labore stumptown. Vegan fanny pack odio cillum wes anderson 8-bit, sustainable jean shorts beard ut DIY ethical culpa terry richardson biodiesel. Art party scenester stumptown, tumblr butcher vero sint qui sapiente accusamus tattooed echo park.</p>
+            </div>
+            <div class="tab-pane fade" id="dropdown1">
+              <p>Etsy mixtape wayfarers, ethical wes anderson tofu before they sold out mcsweeney's organic lomo retro fanny pack lo-fi farm-to-table readymade. Messenger bag gentrify pitchfork tattooed craft beer, iphone skateboard locavore carles etsy salvia banksy hoodie helvetica. DIY synth PBR banksy irony. Leggings gentrify squid 8-bit cred pitchfork. Williamsburg banh mi whatever gluten-free, carles pitchfork biodiesel fixie etsy retro mlkshk vice blog. Scenester cred you probably haven't heard of them, vinyl craft beer blog stumptown. Pitchfork sustainable tofu synth chambray yr.</p>
+            </div>
+            <div class="tab-pane fade" id="dropdown2">
+              <p>Trust fund seitan letterpress, keytar raw denim keffiyeh etsy art party before they sold out master cleanse gluten-free squid scenester freegan cosby sweater. Fanny pack portland seitan DIY, art party locavore wolf cliche high life echo park Austin. Cred vinyl keffiyeh DIY salvia PBR, banh mi before they sold out farm-to-table VHS viral locavore cosby sweater. Lomo wolf viral, mustache readymade thundercats keffiyeh craft beer marfa ethical. Wolf salvia freegan, sartorial keffiyeh echo park vegan.</p>
+            </div>
           </div>
-      {% endfor %}
-
-    </div>
 
 
-    <!--<script>-->
-    <!--  console.log(zipmap_romney)-->
-    <!--</script>-->
-
-
-    <!--<script type="text/javascript" src="https://s3.amazonaws.com/egauge/tweets/romney_data.js"></script>-->
-    <!---->
-
+<script>
+    $(function () {
+        $('.tabs').tabs()
+    })
+</script>
 
 
   </div>
+
+
+  <div class="span12">
+    <h2>#TODO Map1 Headline</h2>
+    <div id="chart"></div>
+    <script type="text/javascript" src="{{ STATIC_URL }}/js_css/choropleth/choropleth.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}/js_css/choropleth/data_js/test_data.js"></script>
+  </div>
+
+  <div class="span12">
+    <h2>#TODO Map1 Headline</h2>
+    <div id="chart"></div>
+    <script type="text/javascript" src="{{ STATIC_URL }}/js_css/choropleth/choropleth.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}/js_css/choropleth/data_js/test_data.js"></script>
+  </div>
+
 </div>
 {% endblock main %}
