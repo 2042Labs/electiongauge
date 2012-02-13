@@ -5,8 +5,17 @@
 {% block page_head %}
     <script type="text/javascript" src="{{ STATIC_URL }}/js_css/d3/d3.js"></script>
     <script type="text/javascript" src="{{ STATIC_URL }}/js_css/d3/d3.geo.js"></script>
+
     <link type="text/css" rel="stylesheet" href="{{ STATIC_URL }}/js_css/choropleth/choropleth.css"/>
     <link type="text/css" rel="stylesheet" href="{{ STATIC_URL }}/js_css/d3/lib/colorbrewer/colorbrewer.css"/>
+
+<script type="text/javascript" src="{{ STATIC_URL }}/js_css/bootstrap/js/bootstrap-tabs.js"></script>
+<script>
+
+{% for c in active_candidates %}
+  $('#{{ c.0 }}').tab('show')
+{% endfor %}
+</script>
 
 
 {% endblock %}
@@ -16,9 +25,52 @@
 <div class="row">
   <div class="span16">
     <h2>#TODO Map1 Headline</h2>
-    <div id="chart"></div>
-    <script type="text/javascript" src="{{ STATIC_URL }}/js_css/choropleth/choropleth.js"></script>
-    <script type="text/javascript" src="{{ STATIC_URL }}/js_css/choropleth/data_js/test_data.js"></script>-->
+
+
+
+
+
+
+<ul class="tabs">
+  <li><a href="#home" data-toggle="tab">Home</a></li>
+  <li><a href="#profile" data-toggle="tab">Profile</a></li>
+  <li><a href="#messages" data-toggle="tab">Messages</a></li>
+  <li><a href="#settings" data-toggle="tab">Settings</a></li>
+</ul>
+
+<div class="tab-content">
+  <div class="tab-pane active" id="home">home</div>
+  <div class="tab-pane" id="profile">profile</div>
+  <div class="tab-pane" id="messages">messages</div>
+  <div class="tab-pane" id="settings">settings</div>
+</div>
+
+
+
+
+
+
+
+    <ul class="tabs">
+      {% for c in active_candidates %}
+          <li {% if c == active_candidates.0 %}class="active"{% endif %}><a href="#{{ c.0 }}" data-toggle="tab">{{ c.1 }}</a></li>
+      {% endfor %}
+    </ul>
+
+    <div class="tab-content">
+
+      <script type="text/javascript" src="{{ STATIC_URL }}/js_css/choropleth/choropleth.js"></script>
+       <div id="chart"></div>
+            <script type="text/javascript" src="{{ STATIC_URL }}/js_css/choropleth/data_js/test_data.js"></script>
+      {% for c in active_candidates %}
+          <div class="tab-pane{% if c == active_candidates.0 %} fade in active{% else %} fade{% endif %}" id="{{ c.0 }}">
+          {{ c.0 }}
+          </div>
+      {% endfor %}
+
+    </div>
+
+
     <!--<script>-->
     <!--  console.log(zipmap_romney)-->
     <!--</script>-->
