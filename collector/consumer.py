@@ -19,8 +19,8 @@ from cowsay import cowstatus
 ##### INITIALIZE MAJOR COMPONENTS
 geo=geocoder.geocoder()
 out=file("/tmp/test_output.json",'ab')
-mm=mapmaker(interval=1000)
-tm=timeline_maker(interval=1000)
+mm=mapmaker(interval=100)
+tm=timeline_maker(interval=100)
 ts=tweet_saver("tweet",limit=1000,private=True)
 proc=tweet_saver("processed",limit=10000,private=True)
 dm = discourse_mapper(interval=1000)
