@@ -3,10 +3,10 @@ from django.template import RequestContext
 
 # TODO: Later this should be pulled from the database
 ACTIVE = (
-('romney', 'Mitt Romney'),
 ('gingrich', 'Newt Gingrich'),
-('santorum', 'Rick Santorum'),
 ('paul', 'Ron Paul'),
+('romney', 'Mitt Romney'),
+('santorum', 'Rick Santorum'),
 )
 
 # Note: This was an attempt as making the xml & js work
