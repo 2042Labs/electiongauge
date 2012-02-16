@@ -23,7 +23,9 @@ l=logging.getLogger("MAP_MAKER")
 class mapmaker(object):
     """MapMaker is a class that generates county-by-county maps from tweets"""
     
-    def __init__(self, interval=10): 
+    def __init__(self, interval=10, to_file=True, to_s3=True):
+        self.to_file=to_file
+        self.to_s3=to_s3 
         self.s3=s3writer.s3writer()
         self.db=self._read_ziptable()
         
@@ -104,15 +106,15 @@ class mapmaker(object):
              except IOError:            
                  self.zip_can[key]={}        
 
-    def _write_data(self, to_s3=True, to_file=True):
+    def _write_data(self):
         """Write out map data as JSON files to S3, to a local file OR BOTH"""
         l.info(">>>>Writing out choropleths")
-        if to_file:
+        if self.to_file:
             f=settings.jsonPath+"zipmap_"
             for key in self.zip_can.keys():
                 out=open(f+key+".json",'wb')
                 out.write(json.dumps(self.zip_can[key]))
-        if to_s3:
+        if self.to_s3:
             f="zipmap_"
             for key in self.zip_can.keys():
                 self.s3.write(f+key+".json", json.dumps(self.zip_can[key]))

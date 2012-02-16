@@ -23,7 +23,9 @@ l=logging.getLogger("TIMELINE")
 
 class timeline_maker(object):
     
-    def __init__(self, interval=10, resolution='minute'):
+    def __init__(self, interval=10, resolution='minute',to_file=True, to_s3=True):
+        self.to_file=to_file
+        self.to_s3=to_s3
         self.s3=s3writer.s3writer()
         self.resolution=resolution
         self.count=0
@@ -37,7 +39,7 @@ class timeline_maker(object):
             try :
                 out=open(f+key+".json",'rb')
                 self.timelines[key]=json.loads(out.read())           
-            except IOError:            
+            except :            
                 self.timelines[key]={}
     
     
@@ -58,10 +60,10 @@ class timeline_maker(object):
         """intersect 2 lists and return the result"""
         return list(set(a) & set(b))
     
-    def add_to_timeline(self,tokens):
+    def add_to_timeline(self,tokens,timestamp=datetime.datetime.today()):
         """Send some tokens in here and -- if they match to a particular candidate, they'll be added to the timeline"""
         self.count+=1
-        time=self._make_time_key(datetime.datetime.today())
+        time=self._make_time_key(timestamp)
         for key in can.candidates.keys():
             if self._intersect(tokens,can.candidates[key]) != []:
                 if time in self.timelines[key]:
@@ -83,15 +85,15 @@ class timeline_maker(object):
             out.write(json.dumps(self.timelines[key]))
             
 
-    def _write_data(self, to_s3=True, to_file=True):
+    def _write_data(self):
         """Write out map data as JSON files to S3, to a local file OR BOTH"""
         l.info(">>>>Writing out timelines")
-        if to_file:
+        if self.to_file:
             f=settings.jsonPath+"timeline_"
             for key in self.timelines.keys():
                 out=open(f+key+".json",'wb')
                 out.write(json.dumps(self.timelines[key]))
-        if to_s3:
+        if self.to_s3:
             f="timeline_"
             for key in self.timelines.keys():
                 self.s3.write(f+key+".json", json.dumps(self.timelines[key]))
