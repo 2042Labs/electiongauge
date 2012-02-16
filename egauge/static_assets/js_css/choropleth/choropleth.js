@@ -42,6 +42,7 @@ function loadjson(data_file) {
   counties.selectAll("path")
       .attr("class", quantize);
   });
+
 }
 
 $('a[data-toggle="tab"]').on('shown', function (e) {
@@ -49,5 +50,7 @@ $('a[data-toggle="tab"]').on('shown', function (e) {
   // candidate results in ['','romney']
   candidate = cand_split[1]
   cand_url = '/static/data/json/zipmap_' + candidate + '.json'
+  $('#chart').hide();
   loadjson(cand_url);
+  $('#chart').fadeIn();
 });
