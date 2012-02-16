@@ -65,7 +65,7 @@ def last_week(time,value):
 romney=get_timeline('http://s3.amazonaws.com/egauge/timeline_romney.json')
 santorum=get_timeline('http://s3.amazonaws.com/egauge/timeline_santorum.json')
 gingrich=get_timeline('http://s3.amazonaws.com/egauge/timeline_gingrich.json')
-paul=get_timeline('http://s3.amazonaws.com/egauge/timeline_ronpaul.json')
+paul=get_timeline('http://s3.amazonaws.com/egauge/timeline_paul.json')
 
 romney_dates,romney_values = interpolate_hourly(romney)
 santorum_dates,santorum_values = interpolate_hourly(santorum)
