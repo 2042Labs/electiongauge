@@ -1,5 +1,5 @@
 import requests
-import simplejson as json
+import json as json
 from datetime import datetime
 from datetime import date
 from datetime import timedelta

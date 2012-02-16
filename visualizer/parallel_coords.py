@@ -1,7 +1,7 @@
 #!/usr/bin/python
 import matplotlib.pyplot as plt
 import matplotlib.ticker as ticker
-import simplejson as json
+import json as json
 import random
 from collections import defaultdict
 
