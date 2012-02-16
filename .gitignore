@@ -52,3 +52,5 @@ egauge/data/json/zipmap_ronpaul.json
 egauge/data/json/zipmap_santorum.json
 
 egauge_wordgraph.net
+
+egauge/apps/public/templates/plots.py
