@@ -1,5 +1,7 @@
 import requests
 import json as json
+import matplotlib
+matplotlib.use('Agg')
 from datetime import datetime
 from datetime import date
 from datetime import timedelta
