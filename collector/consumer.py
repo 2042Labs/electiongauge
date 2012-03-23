@@ -22,8 +22,8 @@ out=file("/tmp/test_output.json",'ab')
 mm=mapmaker(interval=100)
 tm=timeline_maker(interval=100)
 ts=tweet_saver("tweet",limit=1000,private=True)
-proc=tweet_saver("processed",limit=10000,private=True)
-dm = discourse_mapper(interval=1000)
+proc=tweet_saver("processed",limit=1000,private=True)
+dm = discourse_mapper(interval=100)
 status=cowstatus()
 
 
@@ -37,7 +37,7 @@ logging.getLogger("GEOCODER").setLevel(logging.INFO)
 logging.getLogger("TIMELINE").setLevel(logging.INFO)
 logging.getLogger("TWEET_SAVER").setLevel(logging.INFO)
 logging.getLogger("DMAP").setLevel(logging.INFO)
-logging.getLogger("CONSUMER").setLevel(logging.DEBUG)
+logging.getLogger("CONSUMER").setLevel(logging.INFO)
 
 
 
@@ -67,7 +67,7 @@ def callback(data, message):
             
             ts.add(data)
             
-            js_out=json.dumps({'tokens':tokens, 'geo':place})+"\n"
+	    js_out=json.dumps({'tokens':tokens, 'geo':place, "timestamp": js["created_at"]})+"\n"
             #out.write(js_out)
             proc.add(js_out)
             
